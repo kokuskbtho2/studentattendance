@@ -3,89 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laporan Ketidakhadiran Aktiviti Kokurikulum</title>
+    <title>Laporan Ketidakhadiran - SKBTHO2</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body { background-color: #fff5f5; }
-        .school-title { font-weight: bold; color: #b30000; font-size: 1.2rem; }
-        .table-dark { background-color: #b30000 !important; border-color: #b30000 !important; }
-        .header-logo { max-width: 70px; }
+        :root {
+            --primary-red: #ff0000;
+            --dark-red: #b30000;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+        }
+
+        .header-section {
+            background: linear-gradient(135deg, var(--primary-red), var(--dark-red));
+            color: white;
+            padding: 20px 0;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .school-title { font-weight: 800; font-size: 1.1rem; margin: 0; }
+        .header-logo { width: 60px; height: auto; }
+
+        .card-table {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            margin-top: -20px;
+            background: white;
+        }
+
+        /* --- PENYELARASAN SAIZ KOLUM --- */
+        .col-tarikh { width: 15%; min-width: 100px; }
+        .col-nama { width: 35%; min-width: 200px; }
+        .col-kelas { width: 15%; min-width: 100px; }
+        .col-sebab { width: 35%; min-width: 200px; }
+
+        .table thead {
+            background-color: var(--dark-red);
+            color: white;
+        }
+
+        .table th { 
+            border: none; 
+            font-size: 0.85rem; 
+            text-transform: uppercase;
+            padding: 12px 8px !important;
+        }
+
+        .table td { 
+            font-size: 0.9rem; 
+            vertical-align: middle;
+            word-wrap: break-word; /* Supaya teks panjang turun ke bawah */
+            white-space: normal;
+        }
+
+        .text-kelas { color: var(--dark-red); font-weight: bold; }
+
+        @media (max-width: 576px) {
+            .school-title { font-size: 0.9rem; }
+        }
     </style>
 </head>
-<body class="p-3">
-    <div class="container">
-        <div class="d-flex align-items-center mb-4 border-bottom pb-3">
-            <img src="https://imgur.com/DLy3jZn.png" alt="Logo SKBTHO2" class="header-logo me-3">
-            <div>
-                <div class="school-title">SK BANDAR TUN HUSSEIN ONN 2</div>
-                <div class="fw-bold">Laporan Ketidakhadiran Aktiviti Kokurikulum</div>
-            </div>
-        </div>
+<body>
 
-        <div class="d-flex justify-content-between mb-3">
-            <a href="index.html" class="btn btn-outline-danger btn-sm">← Borang</a>
-            <button onclick="window.print()" class="btn btn-danger btn-sm">Cetak PDF</button>
-        </div>
-
-        <div class="table-responsive shadow-sm">
-            <table class="table table-bordered table-hover">
-                <thead class="table-dark text-white">
-                    <tr>
-                        <th>Tarikh</th>
-                        <th>Nama Murid</th>
-                        <th>Kelas</th>
-                        <th>Sebab</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody" class="bg-white">
-                    <tr><td colspan="4" class="text-center">Memuatkan data...</td></tr>
-                </tbody>
-            </table>
+    <div class="header-section text-center">
+        <div class="container">
+            <img src="https://imgur.com/DLy3jZn.png" alt="Logo" class="header-logo mb-2">
+            <h1 class="school-title">SK BANDAR TUN HUSSEIN ONN 2</h1>
+            <p class="mb-0 small opacity-90">Laporan Ketidakhadiran Aktiviti Kokurikulum</p>
         </div>
     </div>
 
-<script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwn18r8Dbg-MsHd4FZkGqL6txG4qXDeYAUpx4pKr3LbxB287GK67PhTbcz0aKIb1fB4/exec";
+    <div class="container mb-5">
+        <div class="d-flex justify-content-between align-items-center my-4 px-2">
+            <a href="index.html" class="btn btn-outline-danger btn-sm rounded-pill fw-bold shadow-sm">← BORANG</a>
+            <button onclick="window.print()" class="btn btn-danger btn-sm rounded-pill fw-bold shadow-sm">CETAK LAPORAN</button>
+        </div>
 
-    async function muatData() {
-        const tableBody = document.getElementById('tableBody');
-        try {
-            // Tambah parameter waktu untuk elakkan data lama (cache)
-            const response = await fetch(SCRIPT_URL + "?nocache=" + new Date().getTime());
-            
-            if (!response.ok) throw new Error('Masalah rangkaian');
-            
-            const data = await response.json();
-            
-            let html = "";
-            // Jika data kosong atau hanya ada tajuk (header)
-            if (!data || data.length <= 1) {
-                html = "<tr><td colspan='4' class='text-center'>Tiada rekod ditemui. Sila pastikan Google Sheet tidak kosong.</td></tr>";
-            } else {
-                // Ambil data, buang baris pertama (header), dan susun yang terbaru di atas
-                const rekod = data.slice(1).reverse();
-                rekod.forEach(row => {
-                    html += `<tr>
-                        <td>${row[0] || '-'}</td>
-                        <td>${row[1] || '-'}</td>
-                        <td class="text-uppercase">${row[2] || '-'}</td>
-                        <td>${row[3] || '-'}</td>
-                    </tr>`;
-                });
+        <div class="card card-table overflow-hidden">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0" style="table-layout: fixed; width: 100%;">
+                    <thead>
+                        <tr>
+                            <th class="col-tarikh ps-3">Tarikh</th>
+                            <th class="col-nama">Nama Murid</th>
+                            <th class="col-kelas">Kelas</th>
+                            <th class="col-sebab">Sebab</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <tr>
+                            <td colspan="4" class="text-center py-5">
+                                <div class="spinner-border spinner-border-sm text-danger me-2"></div>
+                                Sedang memuatkan data...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // URL yang anda berikan
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxC32T93N68BKYFSNBlJ57wxqRTJzacrp9jLeZA9oaqq7wR_vRAwiOZd4e_LOcjE2aC/exec";
+
+        async function muatData() {
+            const tableBody = document.getElementById('tableBody');
+            try {
+                const response = await fetch(SCRIPT_URL + "?t=" + new Date().getTime());
+                const data = await response.json();
+                
+                let html = "";
+                if (!data || data.length <= 1) {
+                    html = "<tr><td colspan='4' class='text-center py-5 text-muted'>Tiada rekod ditemui.</td></tr>";
+                } else {
+                    const rekod = data.slice(1).reverse();
+                    rekod.forEach(row => {
+                        html += `<tr>
+                            <td class="ps-3 text-secondary small">${row[0] || '-'}</td>
+                            <td class="text-uppercase fw-bold">${row[1] || '-'}</td>
+                            <td class="text-kelas">${row[2] || '-'}</td>
+                            <td class="text-muted small">${row[3] || '-'}</td>
+                        </tr>`;
+                    });
+                }
+                tableBody.innerHTML = html;
+            } catch (error) {
+                tableBody.innerHTML = `<tr><td colspan='4' class='text-center py-5 text-danger'>Gagal memuatkan data. Sila semak semula sambungan Google Script.</td></tr>`;
             }
-            tableBody.innerHTML = html;
-        } catch (error) {
-            console.error('Ralat:', error);
-            tableBody.innerHTML = `<tr><td colspan='4' class='text-center text-danger'>
-                Gagal memuatkan data. <br>
-                <small>Pastikan Google Script diset kepada 'Anyone' dan anda telah memberi 'Permission' (Authorize Access).</small>
-            </td></tr>`;
         }
-    }
-
-    // Jalankan fungsi
-    muatData();
-</script>
+        muatData();
     </script>
 </body>
 </html>
