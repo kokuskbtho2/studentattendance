@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laporan_Ketidakhadiran_SKBTHO2</title>
+    <title>Laporan_SKBTHO2_PDF</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         :root { --primary-red: #ff0000; --dark-red: #b30000; }
@@ -14,34 +14,50 @@
             color: white; padding: 30px 0; border-bottom-left-radius: 25px; border-bottom-right-radius: 25px;
         }
 
-        /* Jarak tambahan bawah butang supaya tak rapat dengan jadual */
-        .action-bar { margin-top: 40px; margin-bottom: 30px; padding: 0 10px; }
+        /* Jarak yang lebih besar antara butang dan tajuk kolum */
+        .action-bar { margin-top: 50px; margin-bottom: 40px; padding: 0 10px; }
 
         .card-table { border: none; border-radius: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); background: white; }
 
-        /* Saiz Kolum */
-        .col-tarikh { width: 110px; }
-        .col-nama { width: auto; }
-        .col-kelas { width: 110px; }
-        .col-sebab { width: 35%; }
-        .col-tindakan { width: 80px; }
+        /* --- PENGATURAN KOLUM UNTUK SKRIN --- */
+        .table { width: 100%; border-collapse: collapse; }
+        .col-tarikh { width: 12%; }
+        .col-nama { width: 30%; }
+        .col-kelas { width: 12%; }
+        .col-sebab { width: 36%; }
+        .col-tindakan { width: 10%; }
 
         .table thead { background-color: var(--dark-red); color: white; }
-        .table th { font-size: 0.8rem; text-transform: uppercase; padding: 15px 10px !important; border: none; }
-        .table td { font-size: 0.85rem; vertical-align: middle; padding: 12px 10px !important; word-wrap: break-word; }
+        .table th { font-size: 0.85rem; text-transform: uppercase; padding: 15px 10px !important; border: none; text-align: center; }
+        .table td { font-size: 0.9rem; vertical-align: middle; padding: 12px 10px !important; word-wrap: break-word; overflow-wrap: break-word; }
         
-        .text-nama { font-weight: 700; color: #333; text-transform: uppercase; }
-        .text-kelas { color: var(--dark-red); font-weight: bold; }
-        .btn-padam { font-size: 0.7rem; padding: 2px 8px; border-radius: 5px; }
+        .text-nama { font-weight: 700; color: #333; text-transform: uppercase; line-height: 1.2; }
+        .text-kelas { color: var(--dark-red); font-weight: bold; text-align: center; }
+        .btn-padam { font-size: 0.7rem; padding: 4px 10px; border-radius: 6px; border: 1px solid #ddd; }
 
-        /* OPTIMASI CETAKAN A4 */
+        /* --- OPTIMASI CETAKAN A4 (TIADA BERTINDAN) --- */
         @media print {
-            @page { size: A4; margin: 1cm; }
-            .btn, .btn-padam, .col-tindakan, .action-bar hr { display: none !important; }
-            .header-section { background: none !important; color: black !important; border-bottom: 2px solid #000; border-radius: 0; padding: 10px 0; }
-            .card-table { border: 1px solid #ddd; box-shadow: none; margin-top: 20px; }
-            .table thead { background-color: #eee !important; color: black !important; border-bottom: 2px solid #000; }
-            .action-bar { margin-top: 10px; margin-bottom: 10px; }
+            @page { size: A4 portrait; margin: 1cm; }
+            body { background: white !important; padding: 0; }
+            .btn, .btn-padam, .col-tindakan, .action-bar { display: none !important; }
+            
+            .header-section { 
+                background: none !important; color: black !important; 
+                border-bottom: 2px solid #000; border-radius: 0; padding: 10px 0; margin-bottom: 20px;
+            }
+            .header-logo { width: 60px !important; filter: grayscale(1); }
+            .card-table { border: none; box-shadow: none; margin-top: 20px; }
+            
+            /* Lebar kolum baru selepas kolum 'Tindakan' dibuang */
+            .col-tarikh { width: 15%; }
+            .col-nama { width: 35%; }
+            .col-kelas { width: 15%; }
+            .col-sebab { width: 35%; }
+            
+            .table { border: 1px solid #000 !important; table-layout: fixed !important; }
+            .table thead { background-color: #f0f0f0 !important; color: black !important; }
+            .table th, .table td { border: 1px solid #000 !important; color: black !important; padding: 10px !important; }
+            .text-nama, .text-kelas { color: black !important; }
         }
     </style>
 </head>
@@ -49,33 +65,36 @@
 
     <div class="header-section text-center">
         <div class="container">
-            <img src="https://imgur.com/DLy3jZn.png" alt="Logo" style="width:70px;" class="mb-2">
-            <h1 style="font-weight:800; font-size:1.2rem;">SK BANDAR TUN HUSSEIN ONN 2</h1>
-            <p class="mb-0 small opacity-75">Laporan Ketidakhadiran Kokurikulum</p>
+            <img src="https://imgur.com/DLy3jZn.png" alt="Logo" style="width:70px;" class="mb-2 header-logo">
+            <h1 style="font-weight:800; font-size:1.3rem;">SK BANDAR TUN HUSSEIN ONN 2</h1>
+            <p class="mb-0 small opacity-75">Laporan Ketidakhadiran Aktiviti Kokurikulum</p>
         </div>
     </div>
 
     <div class="container">
         <div class="d-flex justify-content-between align-items-center action-bar">
             <a href="index.html" class="btn btn-outline-danger btn-sm rounded-pill fw-bold">← BORANG</a>
-            <button onclick="window.print()" class="btn btn-danger btn-sm rounded-pill fw-bold px-3 shadow">CETAK LAPORAN</button>
+            <button onclick="window.print()" class="btn btn-danger btn-sm rounded-pill fw-bold px-4 shadow">CETAK PDF (A4)</button>
         </div>
 
         <div class="card card-table overflow-hidden">
             <div class="table-responsive">
-                <table class="table table-hover mb-0" style="table-layout: fixed; width: 100%;">
+                <table class="table table-hover mb-0">
                     <thead>
                         <tr>
                             <th class="col-tarikh ps-3">Tarikh</th>
                             <th class="col-nama">Nama Murid</th>
                             <th class="col-kelas">Kelas</th>
                             <th class="col-sebab">Sebab</th>
-                            <th class="col-tindakan text-center">Aksi</th>
+                            <th class="col-tindakan">Tindakan</th>
                         </tr>
                     </thead>
                     <tbody id="tableBody">
                         <tr>
-                            <td colspan="5" class="text-center py-5">Memuatkan data...</td>
+                            <td colspan="5" class="text-center py-5">
+                                <div class="spinner-border spinner-border-sm text-danger me-2"></div>
+                                Sedang memuatkan laporan...
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -84,6 +103,7 @@
     </div>
 
     <script>
+        // Menggunakan URL Web App terbaru anda
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwF1cSpla8q0MUV8ZieZwdX26hCbAs99GCt3V65FZB1lOYWEgyUt0uUzRdVd-JnX5RI/exec";
 
         async function muatData() {
@@ -93,36 +113,53 @@
                 let html = "";
                 
                 if (!data || data.length <= 1) {
-                    html = "<tr><td colspan='5' class='text-center py-5'>Tiada data.</td></tr>";
+                    html = "<tr><td colspan='5' class='text-center py-5'>Tiada data rekod ditemui.</td></tr>";
                 } else {
-                    // Simpan header (baris 0) dan data (slice 1)
-                    // Kita perlukan index asal untuk fungsi padam, jadi kita tak guna reverse secara terus
+                    // Mula dari baris akhir (terbaru di atas), tapi abaikan baris 0 (header)
                     for (let i = data.length - 1; i >= 1; i--) {
                         let row = data[i];
                         html += `<tr>
-                            <td class="ps-3 text-secondary small">${row[0]}</td>
+                            <td class="ps-3 text-secondary text-center small">${row[0]}</td>
                             <td class="text-nama">${row[1]}</td>
                             <td class="text-kelas">${row[2]}</td>
-                            <td class="small">${row[3]}</td>
+                            <td class="small text-muted">${row[3]}</td>
                             <td class="text-center col-tindakan">
-                                <button onclick="padamRekod(${i})" class="btn btn-outline-secondary btn-padam">Padam</button>
+                                <button onclick="padamRekod(${i})" class="btn btn-light btn-padam text-danger shadow-sm">Padam</button>
                             </td>
                         </tr>`;
                     }
                 }
                 document.getElementById('tableBody').innerHTML = html;
             } catch (e) {
-                document.getElementById('tableBody').innerHTML = "<tr><td colspan='5' class='text-center'>Ralat data.</td></tr>";
+                document.getElementById('tableBody').innerHTML = "<tr><td colspan='5' class='text-center text-danger'>Ralat sambungan. Sila muat semula.</td></tr>";
             }
         }
 
-        function padamRekod(index) {
-            const pw = prompt("Masukkan Kata Laluan Padam:");
+        async function padamRekod(index) {
+            const pw = prompt("Sila masukkan Kata Laluan Padam:");
             if (pw === "4055") {
-                if (confirm("Adakah anda pasti mahu memadam rekod ini?")) {
-                    // Kita hantar index ke Google Script untuk dipadam
-                    // Nota: Anda perlu tambah fungsi padam di Apps Script (lihat bawah)
-                    alert("Sila kemas kini Apps Script anda dengan fungsi deleteRow untuk membolehkan pemadaman sebenar.");
+                if (confirm("Adakah anda pasti mahu memadam rekod ini secara kekal?")) {
+                    const btn = event.target;
+                    btn.innerText = "...";
+                    btn.disabled = true;
+
+                    try {
+                        // Menghantar parameter 'del' ke doGet dalam Apps Script
+                        const delUrl = SCRIPT_URL + "?del=" + index;
+                        const response = await fetch(delUrl);
+                        const result = await response.text();
+                        
+                        if(result === "Deleted") {
+                            alert("Rekod berjaya dipadam.");
+                            muatData();
+                        } else {
+                            alert("Gagal memadam. Pastikan Apps Script anda sudah dikemaskini.");
+                            muatData();
+                        }
+                    } catch (err) {
+                        alert("Ralat pelayan.");
+                        muatData();
+                    }
                 }
             } else if (pw !== null) {
                 alert("Kata laluan salah!");
