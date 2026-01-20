@@ -6,55 +6,107 @@
     <title>Borang Ketidakhadiran - SKBTHO2</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .header-logo { max-width: 100px; height: auto; margin-bottom: 10px; }
-        .school-title { font-weight: bold; color: #1a237e; margin-bottom: 20px; }
+        /* Animasi Latar Belakang Blok Bergerak */
+        body {
+            margin: 0;
+            padding: 0;
+            background: #ff0000; /* Warna merah asas */
+            overflow-x: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .blocks {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .block {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            animation: move 10s linear infinite;
+            position: absolute;
+        }
+
+        @keyframes move {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Kedudukan Blok Rawak */
+        .block:nth-child(1) { left: 10%; animation-duration: 8s; }
+        .block:nth-child(2) { left: 30%; animation-duration: 12s; width: 80px; height: 80px; }
+        .block:nth-child(3) { left: 50%; animation-duration: 10s; }
+        .block:nth-child(4) { left: 70%; animation-duration: 15s; width: 100px; height: 100px; }
+        .block:nth-child(5) { left: 90%; animation-duration: 9s; }
+
+        .header-logo { max-width: 100px; height: auto; margin-bottom: 10px; filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.3)); }
+        .school-title { font-weight: bold; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        
+        .card { border: none; border-radius: 15px; }
+        .card-header { background-color: #b30000 !important; color: white; border-radius: 15px 15px 0 0 !important; }
+        .btn-red { background-color: #ff0000; color: white; border: none; font-weight: bold; }
+        .btn-red:hover { background-color: #cc0000; color: white; }
     </style>
 </head>
-<body class="bg-light">
+<body>
+    <div class="blocks">
+        <div class="block"></div><div class="block"></div><div class="block"></div><div class="block"></div><div class="block"></div>
+    </div>
+
     <div class="container mt-4 mb-5">
         <div class="text-center">
             <img src="https://imgur.com/DLy3jZn.png" alt="Logo SKBTHO2" class="header-logo">
             <h4 class="school-title">SK BANDAR TUN HUSSEIN ONN 2</h4>
         </div>
 
-        <div class="card shadow">
-            <div class="card-header bg-primary text-white text-center">
-                <h5 class="mb-0">Pendaftaran Ketidakhadiran Kokurikulum</h5>
+        <div class="card shadow-lg mt-3">
+            <div class="card-header text-center py-3">
+                <h5 class="mb-0">Borang Ketidakhadiran Dalam Aktiviti Kokurikulum</h5>
             </div>
-            <div class="card-body">
+            <div class="card-body p-4">
                 <form id="kokoForm">
                     <div class="mb-3">
-                        <label class="form-label">Tarikh</label>
+                        <label class="form-label fw-bold">Tarikh</label>
                         <input type="date" id="tarikh" class="form-control" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Nama Murid</label>
+                        <label class="form-label fw-bold">Nama Murid</label>
                         <input type="text" id="nama" class="form-control" placeholder="Nama penuh murid" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Kelas</label>
+                        <label class="form-label fw-bold">Kelas</label>
                         <input type="text" id="kelas" class="form-control" style="text-transform:uppercase" placeholder="Cth: 5 ALPHA" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Sebab Ketidakhadiran</label>
+                        <label class="form-label fw-bold">Sebab Ketidakhadiran</label>
                         <textarea id="sebab" class="form-control" rows="3" placeholder="Sila nyatakan sebab" required></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100 py-2" id="submitBtn">Hantar Maklumat</button>
+                    <button type="submit" class="btn btn-red w-100 py-2 shadow-sm" id="submitBtn">Hantar</button>
                 </form>
                 <hr>
-                <a href="laporan.html" class="btn btn-outline-secondary w-100">Semak Laporan Ketidakhadiran</a>
+                <div class="text-center">
+                    <a href="laporan.html" class="text-decoration-none fw-bold" style="color: #b30000;">Semak Laporan Ketidakhadiran</a>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        const SCRIPT_URL = "MASUKKAN_URL_WEB_APP_ANDA_DI_SINI";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxC32T93N68BKYFSNBlJ57wxqRTJzacrp9jLeZA9oaqq7wR_vRAwiOZd4e_LOcjE2aC/exec";
 
         document.getElementById('kokoForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
             btn.disabled = true;
-            btn.innerText = "Sedang Menghantar...";
+            btn.innerText = "Sila Tunggu...";
 
             const data = {
                 tarikh: document.getElementById('tarikh').value,
@@ -65,19 +117,19 @@
 
             fetch(SCRIPT_URL, {
                 method: 'POST',
-                mode: 'no-cors', // Untuk mengelakkan isu CORS dengan Google Script
+                mode: 'no-cors',
                 body: JSON.stringify(data)
             })
             .then(() => {
-                alert('Data berjaya disimpan ke dalam sistem.');
+                alert('Maklumat Berjaya Dihantar!');
                 this.reset();
                 btn.disabled = false;
-                btn.innerText = "Hantar Maklumat";
+                btn.innerText = "Hantar";
             })
             .catch(err => {
-                alert('Ralat berlaku. Sila cuba lagi.');
+                alert('Ralat! Cuba lagi.');
                 btn.disabled = false;
-                btn.innerText = "Hantar Maklumat";
+                btn.innerText = "Hantar";
             });
         });
     </script>
