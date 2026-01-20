@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Form Ketidakhadiran Aktiviti Kokurikulum</title>
+    <title>Borang Ketidakhadiran - SKBTHO2</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         :root {
@@ -20,114 +20,47 @@
             min-height: 100vh;
         }
 
-        /* --- ANIMASI LATAR BELAKANG (BLOK BERTERBANGAN) --- */
-        .bg-animation {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: -1;
-        }
-
+        /* --- ANIMASI LATAR BELAKANG --- */
+        .bg-animation { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
         .flying-block {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 8px;
-            animation: fly 15s linear infinite;
-            bottom: -150px;
+            position: absolute; background: rgba(255, 255, 255, 0.15);
+            border-radius: 8px; animation: fly 15s linear infinite; bottom: -150px;
         }
-
         @keyframes fly {
             0% { transform: translateY(0) rotate(0deg); opacity: 0; }
             10% { opacity: 1; }
-            90% { opacity: 1; }
             100% { transform: translateY(-120vh) rotate(720deg); opacity: 0; }
         }
-
-        /* Variasi saiz dan posisi blok */
         .flying-block:nth-child(1) { width: 80px; height: 80px; left: 10%; animation-duration: 20s; }
-        .flying-block:nth-child(2) { width: 40px; height: 40px; left: 25%; animation-duration: 12s; animation-delay: 2s; }
-        .flying-block:nth-child(3) { width: 100px; height: 100px; left: 45%; animation-duration: 18s; animation-delay: 5s; }
+        .flying-block:nth-child(2) { width: 40px; height: 40px; left: 25%; animation-duration: 12s; }
+        .flying-block:nth-child(3) { width: 100px; height: 100px; left: 45%; animation-duration: 18s; }
         .flying-block:nth-child(4) { width: 60px; height: 60px; left: 70%; animation-duration: 15s; }
-        .flying-block:nth-child(5) { width: 90px; height: 90px; left: 85%; animation-duration: 22s; animation-delay: 3s; }
+        .flying-block:nth-child(5) { width: 90px; height: 90px; left: 85%; animation-duration: 22s; }
 
-        /* --- ANIMASI LOGO (PULSE) --- */
-        .logo-container {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 15px;
-        }
-
-        .header-logo {
-            width: 100px;
-            height: auto;
-            position: relative;
-            z-index: 2;
-            filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.5));
-        }
-
+        /* --- ANIMASI LOGO --- */
+        .logo-container { position: relative; display: inline-block; margin-bottom: 15px; }
+        .header-logo { width: 100px; height: auto; position: relative; z-index: 2; filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.5)); }
         .pulse-ring {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100%; height: 100%;
-            background-color: var(--pulse-color);
-            border-radius: 50%;
-            z-index: 1;
-            animation: pulse-animation 2s infinite;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 100%; height: 100%; background-color: var(--pulse-color);
+            border-radius: 50%; z-index: 1; animation: pulse-animation 2s infinite;
         }
-
         @keyframes pulse-animation {
             0% { width: 80px; height: 80px; opacity: 0.8; }
             100% { width: 160px; height: 160px; opacity: 0; }
         }
 
-        /* --- STYLES KOMPONEN --- */
-        .school-title { 
-            font-weight: 800; color: white; 
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.6); 
-            font-size: 1.3rem; 
-            letter-spacing: 1px;
-        }
-        
-        .card { 
-            border: none; border-radius: 25px; 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4); 
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(5px);
-        }
-
-        .card-header { 
-            background-color: var(--dark-red) !important; 
-            color: white; border-radius: 25px 25px 0 0 !important; 
-            font-weight: bold; border: none;
-        }
-
-        .btn-red { 
-            background: linear-gradient(to right, #ff0000, #b30000); 
-            color: white; border: none; font-weight: bold; 
-            transition: 0.3s; padding: 12px;
-        }
-
-        .btn-red:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255,0,0,0.4); color: white; }
+        .school-title { font-weight: 800; color: white; text-shadow: 2px 2px 8px rgba(0,0,0,0.6); font-size: 1.3rem; }
+        .card { border: none; border-radius: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.4); background: rgba(255, 255, 255, 0.95); }
+        .card-header { background-color: var(--dark-red) !important; color: white; border-radius: 25px 25px 0 0 !important; font-weight: bold; }
+        .btn-red { background: linear-gradient(to right, #ff0000, #b30000); color: white; border: none; font-weight: bold; padding: 12px; transition: 0.3s; }
         .btn-red:active { transform: scale(0.95); }
-
-        .form-control { border-radius: 12px; border: 1px solid #ddd; }
-        .form-control:focus { border-color: var(--primary-red); box-shadow: 0 0 0 0.25rem rgba(255,0,0,0.2); }
-
-        @media (max-width: 576px) {
-            .school-title { font-size: 1.1rem; }
-            .card { margin: 0 5px; }
-        }
     </style>
 </head>
 <body>
 
     <div class="bg-animation">
-        <div class="flying-block"></div>
-        <div class="flying-block"></div>
-        <div class="flying-block"></div>
-        <div class="flying-block"></div>
-        <div class="flying-block"></div>
+        <div class="flying-block"></div><div class="flying-block"></div><div class="flying-block"></div><div class="flying-block"></div><div class="flying-block"></div>
     </div>
 
     <div class="container mt-4 mb-5">
@@ -149,18 +82,35 @@
                         <label class="form-label small fw-bold text-dark">TARIKH</label>
                         <input type="date" id="tarikh" class="form-control form-control-lg" required>
                     </div>
+                    
                     <div class="mb-3">
-                        <label class="form-label small fw-bold text-dark">NAMA MURID (AUTO-HURUF BESAR)</label>
+                        <label class="form-label small fw-bold text-dark">NAMA MURID</label>
                         <input type="text" id="nama" class="form-control form-control-lg text-uppercase" placeholder="NAMA PENUH MURID" required>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label small fw-bold text-dark">KELAS</label>
-                        <input type="text" id="kelas" class="form-control form-control-lg text-uppercase" placeholder="CONTOH: 5 ALPHA" required>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label small fw-bold text-dark">TAHUN</label>
+                            <select id="tahun" class="form-select form-select-lg" required onchange="kemaskiniKelas()">
+                                <option value="">Pilih Tahun</option>
+                                <option value="4">Tahun 4</option>
+                                <option value="5">Tahun 5</option>
+                                <option value="6">Tahun 6</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label small fw-bold text-dark">KELAS</label>
+                            <select id="kelas" class="form-select form-select-lg" required disabled>
+                                <option value="">Pilih Kelas</option>
+                            </select>
+                        </div>
                     </div>
+
                     <div class="mb-3">
                         <label class="form-label small fw-bold text-dark">SEBAB KETIDAKHADIRAN</label>
-                        <textarea id="sebab" class="form-control form-control-lg" rows="3" placeholder="Sila nyatakan alasan ketidakhadiran" required></textarea>
+                        <textarea id="sebab" class="form-control form-control-lg" rows="3" placeholder="Sila nyatakan alasan" required></textarea>
                     </div>
+                    
                     <button type="submit" class="btn btn-red w-100 shadow rounded-pill mt-2" id="submitBtn">HANTAR</button>
                 </form>
                 <hr>
@@ -174,10 +124,39 @@
     <script>
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwn18r8Dbg-MsHd4FZkGqL6txG4qXDeYAUpx4pKr3LbxB287GK67PhTbcz0aKIb1fB4/exec";
 
-        // Fungsi Real-time Auto Uppercase
-        const inputs = [document.getElementById('nama'), document.getElementById('kelas')];
-        inputs.forEach(el => {
-            el.addEventListener('input', () => { el.value = el.value.toUpperCase(); });
+        // Konfigurasi Kelas
+        const senaraiKelasAsas = ["JASMINE", "HIBISCUS", "SUNFLOWER", "LAVENDER", "TULIP", "DAISY", "SAKURA", "ROSE", "ORCHID"];
+
+        function kemaskiniKelas() {
+            const tahun = document.getElementById('tahun').value;
+            const kelasSelect = document.getElementById('kelas');
+            
+            kelasSelect.innerHTML = '<option value="">Pilih Kelas</option>';
+            
+            if (tahun === "") {
+                kelasSelect.disabled = true;
+                return;
+            }
+
+            kelasSelect.disabled = false;
+            let senarai = [...senaraiKelasAsas];
+            
+            // Tambah kelas Lily untuk Tahun 5 sahaja
+            if (tahun === "5") {
+                senarai.push("LILY");
+            }
+
+            senarai.forEach(k => {
+                let opt = document.createElement('option');
+                opt.value = `${tahun} ${k}`;
+                opt.innerHTML = `${tahun} ${k}`;
+                kelasSelect.appendChild(opt);
+            });
+        }
+
+        // Auto Uppercase Nama
+        document.getElementById('nama').addEventListener('input', function() {
+            this.value = this.value.toUpperCase();
         });
 
         document.getElementById('kokoForm').addEventListener('submit', function(e) {
@@ -199,13 +178,14 @@
                 body: JSON.stringify(data)
             })
             .then(() => {
-                alert('DATA BERJAYA DIHANTAR!\nTerima kasih.');
+                alert('DATA BERJAYA DIHANTAR!');
                 this.reset();
+                document.getElementById('kelas').disabled = true;
                 btn.disabled = false;
                 btn.innerText = "HANTAR";
             })
             .catch(err => {
-                alert('GAGAL! Sila cuba sebentar lagi.');
+                alert('GAGAL! Sila cuba lagi.');
                 btn.disabled = false;
                 btn.innerText = "HANTAR";
             });
