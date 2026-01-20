@@ -44,27 +44,48 @@
         </div>
     </div>
 
-    <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxC32T93N68BKYFSNBlJ57wxqRTJzacrp9jLeZA9oaqq7wR_vRAwiOZd4e_LOcjE2aC/exec";
+<script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwn18r8Dbg-MsHd4FZkGqL6txG4qXDeYAUpx4pKr3LbxB287GK67PhTbcz0aKIb1fB4/exec";
 
-        fetch(SCRIPT_URL)
-            .then(res => res.json())
-            .then(data => {
-                let html = "";
-                if(data.length <= 1) {
-                    html = "<tr><td colspan='4' class='text-center'>Tiada rekod.</td></tr>";
-                } else {
-                    data.slice(1).reverse().forEach(row => {
-                        html += `<tr>
-                            <td>${row[0]}</td>
-                            <td>${row[1]}</td>
-                            <td class="text-uppercase">${row[2]}</td>
-                            <td>${row[3]}</td>
-                        </tr>`;
-                    });
-                }
-                document.getElementById('tableBody').innerHTML = html;
-            });
+    async function muatData() {
+        const tableBody = document.getElementById('tableBody');
+        try {
+            // Tambah parameter waktu untuk elakkan data lama (cache)
+            const response = await fetch(SCRIPT_URL + "?nocache=" + new Date().getTime());
+            
+            if (!response.ok) throw new Error('Masalah rangkaian');
+            
+            const data = await response.json();
+            
+            let html = "";
+            // Jika data kosong atau hanya ada tajuk (header)
+            if (!data || data.length <= 1) {
+                html = "<tr><td colspan='4' class='text-center'>Tiada rekod ditemui. Sila pastikan Google Sheet tidak kosong.</td></tr>";
+            } else {
+                // Ambil data, buang baris pertama (header), dan susun yang terbaru di atas
+                const rekod = data.slice(1).reverse();
+                rekod.forEach(row => {
+                    html += `<tr>
+                        <td>${row[0] || '-'}</td>
+                        <td>${row[1] || '-'}</td>
+                        <td class="text-uppercase">${row[2] || '-'}</td>
+                        <td>${row[3] || '-'}</td>
+                    </tr>`;
+                });
+            }
+            tableBody.innerHTML = html;
+        } catch (error) {
+            console.error('Ralat:', error);
+            tableBody.innerHTML = `<tr><td colspan='4' class='text-center text-danger'>
+                Gagal memuatkan data. <br>
+                <small>Pastikan Google Script diset kepada 'Anyone' dan anda telah memberi 'Permission' (Authorize Access).</small>
+            </td></tr>`;
+        }
+    }
+
+    // Jalankan fungsi
+    muatData();
+</script>
     </script>
 </body>
 </html>
