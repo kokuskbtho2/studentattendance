@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laporan Ketidakhadiran - SKBTHO2</title>
+    <title>Laporan_Ketidakhadiran_SKBTHO2</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         :root {
@@ -14,57 +14,64 @@
         body {
             background-color: #f8f9fa;
             font-family: 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding-bottom: 50px;
         }
 
         .header-section {
             background: linear-gradient(135deg, var(--primary-red), var(--dark-red));
             color: white;
-            padding: 20px 0;
-            border-bottom-left-radius: 20px;
-            border-bottom-right-radius: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 30px 0;
+            border-bottom-left-radius: 25px;
+            border-bottom-right-radius: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
-        .school-title { font-weight: 800; font-size: 1.1rem; margin: 0; }
-        .header-logo { width: 60px; height: auto; }
+        .school-title { font-weight: 800; font-size: 1.2rem; letter-spacing: 1px; }
+        .header-logo { width: 70px; height: auto; margin-bottom: 10px; }
 
         .card-table {
             border: none;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-            margin-top: -20px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            margin-top: -25px;
             background: white;
         }
 
-        /* --- PENYELARASAN SAIZ KOLUM --- */
-        .col-tarikh { width: 15%; min-width: 100px; }
-        .col-nama { width: 35%; min-width: 200px; }
-        .col-kelas { width: 15%; min-width: 100px; }
-        .col-sebab { width: 35%; min-width: 200px; }
+        /* PENYELARASAN LEBAR KOLUM */
+        .col-tarikh { width: 120px; }
+        .col-nama { width: auto; }
+        .col-kelas { width: 120px; }
+        .col-sebab { width: 30%; }
 
-        .table thead {
-            background-color: var(--dark-red);
-            color: white;
-        }
-
-        .table th { 
-            border: none; 
-            font-size: 0.85rem; 
-            text-transform: uppercase;
-            padding: 12px 8px !important;
-        }
-
-        .table td { 
-            font-size: 0.9rem; 
-            vertical-align: middle;
-            word-wrap: break-word; /* Supaya teks panjang turun ke bawah */
-            white-space: normal;
-        }
-
+        .table thead { background-color: var(--dark-red); color: white; }
+        .table th { border: none; font-size: 0.8rem; text-transform: uppercase; padding: 15px 10px !important; }
+        .table td { font-size: 0.85rem; vertical-align: middle; word-wrap: break-word; padding: 12px 10px !important; }
         .text-kelas { color: var(--dark-red); font-weight: bold; }
+        .text-nama { font-weight: 700; color: #333; text-transform: uppercase; }
+
+        /* --- OPTIMASI CETAKAN A4 --- */
+        @media print {
+            @page { size: A4; margin: 1cm; }
+            body { background-color: white; padding-bottom: 0; }
+            .header-section { 
+                background: none !important; color: black !important; 
+                box-shadow: none !important; border-radius: 0;
+                border-bottom: 2px solid #333; padding: 10px 0;
+            }
+            .school-title { color: black !important; text-shadow: none !important; }
+            .report-subtitle { color: #555 !important; }
+            .btn, hr { display: none !important; } /* Sembunyikan butang semasa cetak */
+            .card-table { margin-top: 20px; box-shadow: none; border: 1px solid #ddd; }
+            .table thead { background-color: #eee !important; color: black !important; border-bottom: 2px solid #333; }
+            .table-hover tbody tr:hover { background-color: transparent !important; }
+            .text-kelas { color: black !important; }
+            .header-logo { filter: grayscale(100%); width: 60px; }
+        }
 
         @media (max-width: 576px) {
-            .school-title { font-size: 0.9rem; }
+            .school-title { font-size: 1rem; }
+            .container { padding-left: 10px; padding-right: 10px; }
         }
     </style>
 </head>
@@ -72,27 +79,27 @@
 
     <div class="header-section text-center">
         <div class="container">
-            <img src="https://imgur.com/DLy3jZn.png" alt="Logo" class="header-logo mb-2">
+            <img src="https://imgur.com/DLy3jZn.png" alt="Logo" class="header-logo">
             <h1 class="school-title">SK BANDAR TUN HUSSEIN ONN 2</h1>
-            <p class="mb-0 small opacity-90">Laporan Ketidakhadiran Aktiviti Kokurikulum</p>
+            <p class="report-subtitle mb-0 small">Sistem Laporan Ketidakhadiran Kokurikulum</p>
         </div>
     </div>
 
-    <div class="container mb-5">
+    <div class="container">
         <div class="d-flex justify-content-between align-items-center my-4 px-2">
-            <a href="index.html" class="btn btn-outline-danger btn-sm rounded-pill fw-bold shadow-sm">← BORANG</a>
-            <button onclick="window.print()" class="btn btn-danger btn-sm rounded-pill fw-bold shadow-sm">CETAK LAPORAN</button>
+            <a href="index.html" class="btn btn-outline-danger btn-sm rounded-pill fw-bold">← ISI BORANG</a>
+            <button onclick="window.print()" class="btn btn-danger btn-sm rounded-pill fw-bold px-3 shadow">CETAK LAPORAN (PDF/A4)</button>
         </div>
 
         <div class="card card-table overflow-hidden">
             <div class="table-responsive">
-                <table class="table table-hover mb-0" style="table-layout: fixed; width: 100%;">
+                <table class="table table-hover mb-0" style="width: 100%;">
                     <thead>
                         <tr>
                             <th class="col-tarikh ps-3">Tarikh</th>
                             <th class="col-nama">Nama Murid</th>
                             <th class="col-kelas">Kelas</th>
-                            <th class="col-sebab">Sebab</th>
+                            <th class="col-sebab">Sebab Ketidakhadiran</th>
                         </tr>
                     </thead>
                     <tbody id="tableBody">
@@ -109,8 +116,7 @@
     </div>
 
     <script>
-        // URL yang anda berikan
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxC32T93N68BKYFSNBlJ57wxqRTJzacrp9jLeZA9oaqq7wR_vRAwiOZd4e_LOcjE2aC/exec";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxSqNi73qRhnt7pYsRlfodQ8IHIdyCebGGmpqShIBrNwlplpBJXlPBqdBENBC74y9-v/exec";
 
         async function muatData() {
             const tableBody = document.getElementById('tableBody');
@@ -120,13 +126,13 @@
                 
                 let html = "";
                 if (!data || data.length <= 1) {
-                    html = "<tr><td colspan='4' class='text-center py-5 text-muted'>Tiada rekod ditemui.</td></tr>";
+                    html = "<tr><td colspan='4' class='text-center py-5 text-muted small'>Tiada rekod ditemui.</td></tr>";
                 } else {
                     const rekod = data.slice(1).reverse();
                     rekod.forEach(row => {
                         html += `<tr>
                             <td class="ps-3 text-secondary small">${row[0] || '-'}</td>
-                            <td class="text-uppercase fw-bold">${row[1] || '-'}</td>
+                            <td class="text-nama">${row[1] || '-'}</td>
                             <td class="text-kelas">${row[2] || '-'}</td>
                             <td class="text-muted small">${row[3] || '-'}</td>
                         </tr>`;
@@ -134,7 +140,7 @@
                 }
                 tableBody.innerHTML = html;
             } catch (error) {
-                tableBody.innerHTML = `<tr><td colspan='4' class='text-center py-5 text-danger'>Gagal memuatkan data. Sila semak semula sambungan Google Script.</td></tr>`;
+                tableBody.innerHTML = `<tr><td colspan='4' class='text-center py-5 text-danger small'>Ralat memuatkan data.</td></tr>`;
             }
         }
         muatData();
