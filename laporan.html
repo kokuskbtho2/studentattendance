@@ -99,7 +99,7 @@
     </div>
 
     <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwF1cSpla8q0MUV8ZieZwdX26hCbAs99GCt3V65FZB1lOYWEgyUt0uUzRdVd-JnX5RI/exec";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzgqeo-b7TpsEZXjitYgqBJmIIsszXPD_Utr_6iWy8lytpeY_crGWJHdW6UuisEzUms/exec";
 
         async function muatData() {
             try {
@@ -110,22 +110,25 @@
                 if (!data || data.length <= 1) {
                     html = "<tr><td colspan='5' class='text-center py-5'>Tiada rekod.</td></tr>";
                 } else {
-                    for (let i = data.length - 1; i >= 1; i--) {
-                        const row = data[i];
-                        
-                        // --- PROSES TARIKH SAHAJA (Ambil bahagian sebelum 'T' atau ruang) ---
-                        let tarikhAsal = row[0] ? row[0].toString() : "";
-                        let tarikhSahaja = tarikhAsal.split(' ')[0].split('T')[0]; 
+for (let i = data.length - 1; i >= 1; i--) {
+    const row = data[i];
+    
+    // row[0] = Tarikh
+    // row[1] = Nama Murid
+    // row[2] = Kelas
+    // row[3] = Sebab
+    // row[4] = Pelapor (Kolum E)
 
-html += `<tr>
-    <td class="text-center small">${tarikhSahaja}</td>
-    <td class="text-nama small">${row[1]}</td>
-    <td class="text-kelas text-center small">${row[2]}</td>
-    <td class="small text-muted">${row[3]}</td>
-    <td class="small fw-bold text-uppercase">${row[4] || '-'}</td> <td class="text-center col-tindakan">
-        <button onclick="padamRekod(${i})" class="btn btn-light btn-padam text-danger">Padam</button>
-    </td>
-</tr>`;
+    html += `<tr>
+        <td class="text-center small">${row[0]}</td>
+        <td class="text-nama small">${row[1]}</td>
+        <td class="text-kelas text-center small">${row[2]}</td>
+        <td class="small text-muted">${row[3]}</td>
+        <td class="small fw-bold text-uppercase">${row[4] || '-'}</td> <td class="text-center col-tindakan">
+            <button onclick="padamRekod(${i})" class="btn btn-light btn-padam text-danger">Padam</button>
+        </td>
+    </tr>`;
+}
                     }
                 }
                 document.getElementById('tableBody').innerHTML = html;
