@@ -74,7 +74,7 @@
 
         <div class="card">
             <div class="card-header text-center py-3">
-                <h6 class="mb-0 text-uppercase">Borang Ketidakhadiran Dalam Aktiviti Kokurikulum</h6>
+                <h6 class="mb-0 text-uppercase">Borang Ketidakhadiran Kokurikulum</h6>
             </div>
             <div class="card-body p-4">
                 <form id="kokoForm">
@@ -89,16 +89,16 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6 mb-3">
+                        <div class="col-6 mb-3">
                             <label class="form-label small fw-bold text-dark">TAHUN</label>
                             <select id="tahun" class="form-select form-select-lg" required onchange="kemaskiniKelas()">
-                                <option value="">Pilih Tahun</option>
-                                <option value="4">Tahun 4</option>
-                                <option value="5">Tahun 5</option>
-                                <option value="6">Tahun 6</option>
+                                <option value="">Pilih</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
                             </select>
                         </div>
-                        <div class="col-md-6 mb-3">
+                        <div class="col-6 mb-3">
                             <label class="form-label small fw-bold text-dark">KELAS</label>
                             <select id="kelas" class="form-select form-select-lg" required disabled>
                                 <option value="">Pilih Kelas</option>
@@ -108,98 +108,89 @@
 
                     <div class="mb-3">
                         <label class="form-label small fw-bold text-dark">SEBAB KETIDAKHADIRAN</label>
-                        <textarea id="sebab" class="form-control form-control-lg" rows="3" placeholder="Sila nyatakan alasan" required></textarea>
+                        <textarea id="sebab" class="form-control form-control-lg" rows="2" placeholder="Sila nyatakan alasan" required></textarea>
                     </div>
 
-                    <div class="mb-3">
-    <label class="form-label small fw-bold text-dark">NAMA GURU (PELAPOR)</label>
-    <select id="pelapor" class="form-select form-select-lg" required>
-        <option value="">Pilih Nama Guru</option>
-        <option value="ABDUL KAHAR BIN AWANG SEMAN">ABDUL KAHAR BIN AWANG SEMAN</option>
-        <option value="AINA ATHIRAH BINTI AHMAD SENARI">AINA ATHIRAH BINTI AHMAD SENARI</option>
-        <option value="AMINUDDIN BIN ISMAIL">AMINUDDIN BIN ISMAIL</option>
-        <option value="AMIRAH BINTI MOHD ALWI">AMIRAH BINTI MOHD ALWI</option>
-        <option value="ARINAWATI BINTI MOHD YAH">ARINAWATI BINTI MOHD YAH</option>
-        <option value="AWATIF BINTI MD YUSOP">AWATIF BINTI MD YUSOP</option>
-        <option value="AZHAIRIN ZULAIHAN BINTI BADRUL HISHAM">AZHAIRIN ZULAIHAN BINTI BADRUL HISHAM</option>
-        <option value="AZIMA BINTI MAT ZIN @ ISMAIL">AZIMA BINTI MAT ZIN @ ISMAIL</option>
-        <option value="AZIZAH BINTI MOHAMMED">AZIZAH BINTI MOHAMMED</option>
-        <option value="AZMAN BIN OTHMAN">AZMAN BIN OTHMAN</option>
-        <option value="DINITA A/P MUNIANDY">DINITA A/P MUNIANDY</option>
-        <option value="EMIL NORULHUDA BINTI AMIRUDDIN">EMIL NORULHUDA BINTI AMIRUDDIN</option>
-        <option value="FAIZA BINTI HASBULLAH">FAIZA BINTI HASBULLAH</option>
-        <option value="FAIZAH BINTI IBRAHIM">FAIZAH BINTI IBRAHIM</option>
-        <option value="FARAWAHIDA BINTI MOHD SAFFUAN">FARAWAHIDA BINTI MOHD SAFFUAN</option>
-        <option value="FARIDATUL AKMAAR BINTI MAT SAID">FARIDATUL AKMAAR BINTI MAT SAID</option>
-        <option value="FATIN FARHANA BINTI AMINUDDIN">FATIN FARHANA BINTI AMINUDDIN</option>
-        <option value="HAFIZI BIN OMAR">HAFIZI BIN OMAR</option>
-        <option value="HARISAH BINTI AWANG">HARISAH BINTI AWANG</option>
-        <option value="HARIZ IRFAN BIN HUSSIN PAKRI">HARIZ IRFAN BIN HUSSIN PAKRI</option>
-        <option value="HASMAWATI BINTI OTHMAN">HASMAWATI BINTI OTHMAN</option>
-        <option value="HAZRAH BINTI MOHAMAD">HAZRAH BINTI MOHAMAD</option>
-        <option value="IRDINA AFIQAH BINTI ISMAIL">IRDINA AFIQAH BINTI ISMAIL</option>
-        <option value="IRMA AZNITA BINTI KAMBALI">IRMA AZNITA BINTI KAMBALI</option>
-        <option value="KANG CHIN KOAT">KANG CHIN KOAT</option>
-        <option value="KASUMMA BINTI PANDAK KAMAL">KASUMMA BINTI PANDAK KAMAL</option>
-        <option value="MARYANI BINTI DRAMAN">MARYANI BINTI DRAMAN</option>
-        <option value="MAWADDAH HUDA BINTI MOHD AFFANDI">MAWADDAH HUDA BINTI MOHD AFFANDI</option>
-        <option value="MAZILA HAZLIN BINTI ABD MAJIT">MAZILA HAZLIN BINTI ABD MAJIT</option>
-        <option value="MOHAMAD MUNIR BIN ZAINUN">MOHAMAD MUNIR BIN ZAINUN</option>
-        <option value="MOHAMED SYAKIR BIN MD TAHIR">MOHAMED SYAKIR BIN MD TAHIR</option>
-        <option value="MOHD SHAMILULHAYAT BIN MOHD ASRI">MOHD SHAMILULHAYAT BIN MOHD ASRI</option>
-        <option value="MUHAMMAD AKASYAH SAIDON">MUHAMMAD AKASYAH SAIDON</option>
-        <option value="MUHAMMAD IRFAN WAZIF BIN MOHD NIZAM">MUHAMMAD IRFAN WAZIF BIN MOHD NIZAM</option>
-        <option value="NADIAH BINTI IDRIS">NADIAH BINTI IDRIS</option>
-        <option value="NAIM AISAMUDDIN BIN ABDUL RAZAK">NAIM AISAMUDDIN BIN ABDUL RAZAK</option>
-        <option value="NAZIMATUL AMANI BINTI RAMLI">NAZIMATUL AMANI BINTI RAMLI</option>
-        <option value="NIK HAZIMAN BIN CHE DAUD">NIK HAZIMAN BIN CHE DAUD</option>
-        <option value="NIK NUR LIYANA BINTI NIK MOHD FAUZI">NIK NUR LIYANA BINTI NIK MOHD FAUZI</option>
-        <option value="NITHILA A/P JAKANATHAN">NITHILA A/P JAKANATHAN</option>
-        <option value="NOOR AZIZAH BINTI MD BAHARUDDIN">NOOR AZIZAH BINTI MD BAHARUDDIN</option>
-        <option value="NORAIDA BINTI MUSTAPHA">NORAIDA BINTI MUSTAPHA</option>
-        <option value="NORAMANI BINTI MAT NOR">NORAMANI BINTI MAT NOR</option>
-        <option value="NORMA BINTI ISMAIL">NORMA BINTI ISMAIL</option>
-        <option value="NORUL HUDA BINTI JAMIN">NORUL HUDA BINTI JAMIN</option>
-        <option value="NOUR EZIEZAH BINTI MAZMAN">NOUR EZIEZAH BINTI MAZMAN</option>
-        <option value="NUR FATHIN BINTI ZAKI">NUR FATHIN BINTI ZAKI</option>
-        <option value="NUR SYAFIQAH BINTI ZAHIRUDIN">NUR SYAFIQAH BINTI ZAHIRUDIN</option>
-        <option value="NUR ZURIYATIE BINTI AZIZ">NUR ZURIYATIE BINTI AZIZ</option>
-        <option value="NURUL HAZIQAH BINTI RAMLI">NURUL HAZIQAH BINTI RAMLI</option>
-        <option value="NURUL ULYA BINTI NORDIN">NURUL ULYA BINTI NORDIN</option>
-        <option value="PIRAKAS A/L SHANGAR">PIRAKAS A/L SHANGAR</option>
-        <option value="ROHAIZA BINTI RAZALI">ROHAIZA BINTI RAZALI</option>
-        <option value="ROSNAH BINTI JANTAN">ROSNAH BINTI JANTAN</option>
-        <option value="RUBINA BINTI RAMLI">RUBINA BINTI RAMLI</option>
-        <option value="SAHARINA BINTI ABDULLAH">SAHARINA BINTI ABDULLAH</option>
-        <option value="SITI HAWA BINTI MAT YAJID">SITI HAWA BINTI MAT YAJID</option>
-        <option value="SITI MASHITAH BINTI MOHD ASRI">SITI MASHITAH BINTI MOHD ASRI</option>
-        <option value="SITI NORASYIKIN BINTI ABDULLAH">SITI NORASYIKIN BINTI ABDULLAH</option>
-        <option value="SITI NUR DIANA BINTI MOHAMAD NASIR">SITI NUR DIANA BINTI MOHAMAD NASIR</option>
-        <option value="SULAIMAN BIN HASSAN">SULAIMAN BIN HASSAN</option>
-        <option value="SUZILA BINTI MOHD NOR">SUZILA BINTI MOHD NOR</option>
-        <option value="TG IHTIFAZUDDIN BIN TG IBRAHIM">TG IHTIFAZUDDIN BIN TG IBRAHIM</option>
-        <option value="UMI NUR HANIRA BINTI ISMAIL">UMI NUR HANIRA BINTI ISMAIL</option>
-        <option value="WAN FAIRIS BIN A. KAMAR">WAN FAIRIS BIN A. KAMAR</option>
-        <option value="ZABIDI BIN MOHAMMAD">ZABIDI BIN MOHAMMAD</option>
-        <option value="ZANIRAH BINTI A. BAKAR">ZANIRAH BINTI A. BAKAR</option>
-    </select>
-</div>
+                    <div class="mb-4">
+                        <label class="form-label small fw-bold text-dark">NAMA GURU (PELAPOR)</label>
+                        <select id="pelapor" class="form-select form-select-lg" required>
+                            <option value="">Pilih Nama Guru</option>
+                            <option value="ABDUL KAHAR BIN AWANG SEMAN">ABDUL KAHAR BIN AWANG SEMAN</option>
+                            <option value="AINA ATHIRAH BINTI AHMAD SENARI">AINA ATHIRAH BINTI AHMAD SENARI</option>
+                            <option value="AMINUDDIN BIN ISMAIL">AMINUDDIN BIN ISMAIL</option>
+                            <option value="AMIRAH BINTI MOHD ALWI">AMIRAH BINTI MOHD ALWI</option>
+                            <option value="ARINAWATI BINTI MOHD YAH">ARINAWATI BINTI MOHD YAH</option>
+                            <option value="AWATIF BINTI MD YUSOP">AWATIF BINTI MD YUSOP</option>
+                            <option value="AZHAIRIN ZULAIHAN BINTI BADRUL HISHAM">AZHAIRIN ZULAIHAN BINTI BADRUL HISHAM</option>
+                            <option value="AZIMA BINTI MAT ZIN @ ISMAIL">AZIMA BINTI MAT ZIN @ ISMAIL</option>
+                            <option value="AZIZAH BINTI MOHAMMED">AZIZAH BINTI MOHAMMED</option>
+                            <option value="AZMAN BIN OTHMAN">AZMAN BIN OTHMAN</option>
+                            <option value="DINITA A/P MUNIANDY">DINITA A/P MUNIANDY</option>
+                            <option value="EMIL NORULHUDA BINTI AMIRUDDIN">EMIL NORULHUDA BINTI AMIRUDDIN</option>
+                            <option value="FAIZA BINTI HASBULLAH">FAIZA BINTI HASBULLAH</option>
+                            <option value="FAIZAH BINTI IBRAHIM">FAIZAH BINTI IBRAHIM</option>
+                            <option value="FARAWAHIDA BINTI MOHD SAFFUAN">FARAWAHIDA BINTI MOHD SAFFUAN</option>
+                            <option value="FARIDATUL AKMAAR BINTI MAT SAID">FARIDATUL AKMAAR BINTI MAT SAID</option>
+                            <option value="FATIN FARHANA BINTI AMINUDDIN">FATIN FARHANA BINTI AMINUDDIN</option>
+                            <option value="HAFIZI BIN OMAR">HAFIZI BIN OMAR</option>
+                            <option value="HARISAH BINTI AWANG">HARISAH BINTI AWANG</option>
+                            <option value="HARIZ IRFAN BIN HUSSIN PAKRI">HARIZ IRFAN BIN HUSSIN PAKRI</option>
+                            <option value="HASMAWATI BINTI OTHMAN">HASMAWATI BINTI OTHMAN</option>
+                            <option value="HAFIZI BIN OMAR">HAFIZI BIN OMAR</option>
+                            <option value="HAZRAH BINTI MOHAMAD">HAZRAH BINTI MOHAMAD</option>
+                            <option value="IRDINA AFIQAH BINTI ISMAIL">IRDINA AFIQAH BINTI ISMAIL</option>
+                            <option value="IRMA AZNITA BINTI KAMBALI">IRMA AZNITA BINTI KAMBALI</option>
+                            <option value="KANG CHIN KOAT">KANG CHIN KOAT</option>
+                            <option value="KASUMMA BINTI PANDAK KAMAL">KASUMMA BINTI PANDAK KAMAL</option>
+                            <option value="MARYANI BINTI DRAMAN">MARYANI BINTI DRAMAN</option>
+                            <option value="MAWADDAH HUDA BINTI MOHD AFFANDI">MAWADDAH HUDA BINTI MOHD AFFANDI</option>
+                            <option value="MAZILA HAZLIN BINTI ABD MAJIT">MAZILA HAZLIN BINTI ABD MAJIT</option>
+                            <option value="MOHAMAD MUNIR BIN ZAINUN">MOHAMAD MUNIR BIN ZAINUN</option>
+                            <option value="MOHAMED SYAKIR BIN MD TAHIR">MOHAMED SYAKIR BIN MD TAHIR</option>
+                            <option value="MOHD SHAMILULHAYAT BIN MOHD ASRI">MOHD SHAMILULHAYAT BIN MOHD ASRI</option>
+                            <option value="MUHAMMAD AKASYAH SAIDON">MUHAMMAD AKASYAH SAIDON</option>
+                            <option value="MUHAMMAD IRFAN WAZIF BIN MOHD NIZAM">MUHAMMAD IRFAN WAZIF BIN MOHD NIZAM</option>
+                            <option value="NADIAH BINTI IDRIS">NADIAH BINTI IDRIS</option>
+                            <option value="NAIM AISAMUDDIN BIN ABDUL RAZAK">NAIM AISAMUDDIN BIN ABDUL RAZAK</option>
+                            <option value="NAZIMATUL AMANI BINTI RAMLI">NAZIMATUL AMANI BINTI RAMLI</option>
+                            <option value="NIK HAZIMAN BIN CHE DAUD">NIK HAZIMAN BIN CHE DAUD</option>
+                            <option value="NIK NUR LIYANA BINTI NIK MOHD FAUZI">NIK NUR LIYANA BINTI NIK MOHD FAUZI</option>
+                            <option value="NITHILA A/P JAKANATHAN">NITHILA A/P JAKANATHAN</option>
+                            <option value="NOOR AZIZAH BINTI MD BAHARUDDIN">NOOR AZIZAH BINTI MD BAHARUDDIN</option>
+                            <option value="NORAIDA BINTI MUSTAPHA">NORAIDA BINTI MUSTAPHA</option>
+                            <option value="NORAMANI BINTI MAT NOR">NORAMANI BINTI MAT NOR</option>
+                            <option value="NORMA BINTI ISMAIL">NORMA BINTI ISMAIL</option>
+                            <option value="NORUL HUDA BINTI JAMIN">NORUL HUDA BINTI JAMIN</option>
+                            <option value="NOUR EZIEZAH BINTI MAZMAN">NOUR EZIEZAH BINTI MAZMAN</option>
+                            <option value="NUR FATHIN BINTI ZAKI">NUR FATHIN BINTI ZAKI</option>
+                            <option value="NUR SYAFIQAH BINTI ZAHIRUDIN">NUR SYAFIQAH BINTI ZAHIRUDIN</option>
+                            <option value="NUR ZURIYATIE BINTI AZIZ">NUR ZURIYATIE BINTI AZIZ</option>
+                            <option value="NURUL HAZIQAH BINTI RAMLI">NURUL HAZIQAH BINTI RAMLI</option>
+                            <option value="NURUL ULYA BINTI NORDIN">NURUL ULYA BINTI NORDIN</option>
+                            <option value="PIRAKAS A/L SHANGAR">PIRAKAS A/L SHANGAR</option>
+                            <option value="ROHAIZA BINTI RAZALI">ROHAIZA BINTI RAZALI</option>
+                            <option value="ROSNAH BINTI JANTAN">ROSNAH BINTI JANTAN</option>
+                            <option value="RUBINA BINTI RAMLI">RUBINA BINTI RAMLI</option>
+                            <option value="SAHARINA BINTI ABDULLAH">SAHARINA BINTI ABDULLAH</option>
+                            <option value="SITI HAWA BINTI MAT YAJID">SITI HAWA BINTI MAT YAJID</option>
+                            <option value="SITI MASHITAH BINTI MOHD ASRI">SITI MASHITAH BINTI MOHD ASRI</option>
+                            <option value="SITI NORASYIKIN BINTI ABDULLAH">SITI NORASYIKIN BINTI ABDULLAH</option>
+                            <option value="SITI NUR DIANA BINTI MOHAMAD NASIR">SITI NUR DIANA BINTI MOHAMAD NASIR</option>
+                            <option value="SULAIMAN BIN HASSAN">SULAIMAN BIN HASSAN</option>
+                            <option value="SUZILA BINTI MOHD NOR">SUZILA BINTI MOHD NOR</option>
+                            <option value="TG IHTIFAZUDDIN BIN TG IBRAHIM">TG IHTIFAZUDDIN BIN TG IBRAHIM</option>
+                            <option value="UMI NUR HANIRA BINTI ISMAIL">UMI NUR HANIRA BINTI ISMAIL</option>
+                            <option value="WAN FAIRIS BIN A. KAMAR">WAN FAIRIS BIN A. KAMAR</option>
+                            <option value="ZABIDI BIN MOHAMMAD">ZABIDI BIN MOHAMMAD</option>
+                            <option value="ZANIRAH BINTI A. BAKAR">ZANIRAH BINTI A. BAKAR</option>
+                        </select>
+                    </div>
 
-<script>
-// Dalam bahagian submit form, pastikan data pelapor dihantar:
-const data = {
-    tarikh: document.getElementById('tarikh').value,
-    nama: document.getElementById('nama').value,
-    kelas: document.getElementById('kelas').value,
-    sebab: document.getElementById('sebab').value,
-    pelapor: document.getElementById('pelapor').value // Pastikan ini ada
-};
-</script>
-                    <button type="submit" class="btn btn-red w-100 shadow rounded-pill mt-2" id="submitBtn">HANTAR</button>
+                    <button type="submit" class="btn btn-red w-100 shadow rounded-pill py-3" id="submitBtn">HANTAR LAPORAN</button>
                 </form>
                 <hr>
                 <div class="text-center">
-                    <a href="laporan.html" class="text-decoration-none fw-bold small text-danger">LIHAT LAPORAN TERKINI</a>
+                    <a href="laporan.html" class="text-decoration-none fw-bold small text-danger">LIHAT REKOD KETIDAKHADIRAN →</a>
                 </div>
             </div>
         </div>
@@ -208,13 +199,11 @@ const data = {
     <script>
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwhBrT3lhsir-WdwAsK43l_xOoPMKNKXPqg0YESn1Wje6O25ODfhQcliiHBgUSgLKSQ/exec";
         
-        // Konfigurasi Kelas
         const senaraiKelasAsas = ["JASMINE", "HIBISCUS", "SUNFLOWER", "LAVENDER", "TULIP", "DAISY", "SAKURA", "ROSE", "ORCHID"];
 
         function kemaskiniKelas() {
             const tahun = document.getElementById('tahun').value;
             const kelasSelect = document.getElementById('kelas');
-            
             kelasSelect.innerHTML = '<option value="">Pilih Kelas</option>';
             
             if (tahun === "") {
@@ -224,11 +213,7 @@ const data = {
 
             kelasSelect.disabled = false;
             let senarai = [...senaraiKelasAsas];
-            
-            // Tambah kelas Lily untuk Tahun 5 sahaja
-            if (tahun === "5") {
-                senarai.push("LILY");
-            }
+            if (tahun === "5") senarai.push("LILY");
 
             senarai.forEach(k => {
                 let opt = document.createElement('option');
@@ -238,7 +223,6 @@ const data = {
             });
         }
 
-        // Auto Uppercase Nama
         document.getElementById('nama').addEventListener('input', function() {
             this.value = this.value.toUpperCase();
         });
@@ -247,31 +231,33 @@ const data = {
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
             btn.disabled = true;
-            btn.innerText = "SEDANG DIHANTAR...";
+            btn.innerText = "MENGHANTAR...";
 
-            const data = {
+            // AMBIL SEMUA 5 DATA DI SINI
+            const formData = {
                 tarikh: document.getElementById('tarikh').value,
                 nama: document.getElementById('nama').value,
                 kelas: document.getElementById('kelas').value,
-                sebab: document.getElementById('sebab').value
+                sebab: document.getElementById('sebab').value,
+                pelapor: document.getElementById('pelapor').value
             };
 
             fetch(SCRIPT_URL, {
                 method: 'POST',
                 mode: 'no-cors',
-                body: JSON.stringify(data)
+                body: JSON.stringify(formData)
             })
             .then(() => {
-                alert('DATA BERJAYA DIHANTAR!');
+                alert('DATA BERJAYA DISIMPAN!');
                 this.reset();
                 document.getElementById('kelas').disabled = true;
                 btn.disabled = false;
-                btn.innerText = "HANTAR";
+                btn.innerText = "HANTAR LAPORAN";
             })
             .catch(err => {
-                alert('GAGAL! Sila cuba lagi.');
+                alert('RALAT! Sila cuba lagi.');
                 btn.disabled = false;
-                btn.innerText = "HANTAR";
+                btn.innerText = "HANTAR LAPORAN";
             });
         });
     </script>
