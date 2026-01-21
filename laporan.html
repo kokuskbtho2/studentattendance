@@ -21,11 +21,21 @@
         #printInfo { display: none; font-size: 0.75rem; color: #555; margin-bottom: 10px; text-align: right; }
 
         .table { width: 100%; border-collapse: collapse; }
-        .col-tarikh { width: 15%; }
-        .col-nama { width: 30%; }
-        .col-kelas { width: 12%; }
-        .col-sebab { width: 33%; }
-        .col-tindakan { width: 10%; }
+.col-tarikh { width: 10%; }
+.col-nama { width: 22%; }
+.col-kelas { width: 10%; }
+.col-sebab { width: 25%; }
+.col-pelapor { width: 23%; } /* Kolum baru */
+.col-tindakan { width: 10%; }
+
+@media print {
+    /* Lebar kolum dalam PDF A4 (Tanpa kolum Tindakan) */
+    .col-tarikh { width: 12%; }
+    .col-nama { width: 25%; }
+    .col-kelas { width: 13%; }
+    .col-sebab { width: 25%; }
+    .col-pelapor { width: 25%; }
+}
 
         .table thead { background-color: var(--dark-red); color: white; }
         .table th { font-size: 0.85rem; text-transform: uppercase; padding: 15px 10px !important; border: none; text-align: center; }
@@ -69,15 +79,15 @@
         <div class="card card-table overflow-hidden">
             <div class="table-responsive">
                 <table class="table table-hover mb-0">
-                    <thead>
-                        <tr>
-                            <th class="col-tarikh">Tarikh</th>
-                            <th class="col-nama">Nama Murid</th>
-                            <th class="col-kelas">Kelas</th>
-                            <th class="col-sebab">Sebab</th>
-                            <th class="col-tindakan">Tindakan</th>
-                        </tr>
-                    </thead>
+                   <thead>
+    <tr>
+        <th class="col-tarikh">Tarikh</th>
+        <th class="col-nama">Nama Murid</th>
+        <th class="col-kelas">Kelas</th>
+        <th class="col-sebab">Sebab</th>
+        <th class="col-pelapor">Pelapor</th> <th class="col-tindakan">Tindakan</th>
+    </tr>
+</thead>
                     <tbody id="tableBody">
                         <tr>
                             <td colspan="5" class="text-center py-5">Memuatkan data...</td>
@@ -107,15 +117,15 @@
                         let tarikhAsal = row[0] ? row[0].toString() : "";
                         let tarikhSahaja = tarikhAsal.split(' ')[0].split('T')[0]; 
 
-                        html += `<tr>
-                            <td class="text-center small">${tarikhSahaja}</td>
-                            <td class="text-nama">${row[1]}</td>
-                            <td class="text-kelas text-center">${row[2]}</td>
-                            <td class="small text-muted">${row[3]}</td>
-                            <td class="text-center col-tindakan">
-                                <button onclick="padamRekod(${i})" class="btn btn-light btn-padam text-danger">Padam</button>
-                            </td>
-                        </tr>`;
+html += `<tr>
+    <td class="text-center small">${tarikhSahaja}</td>
+    <td class="text-nama small">${row[1]}</td>
+    <td class="text-kelas text-center small">${row[2]}</td>
+    <td class="small text-muted">${row[3]}</td>
+    <td class="small fw-bold text-uppercase">${row[4] || '-'}</td> <td class="text-center col-tindakan">
+        <button onclick="padamRekod(${i})" class="btn btn-light btn-padam text-danger">Padam</button>
+    </td>
+</tr>`;
                     }
                 }
                 document.getElementById('tableBody').innerHTML = html;
