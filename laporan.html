@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laporan_SKBTHO2_PDF</title>
+    <title>Laporan_SKBTHO2_Lengkap</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         :root { --primary-red: #ff0000; --dark-red: #b30000; }
@@ -20,41 +20,41 @@
         /* Maklumat Cetakan (Hanya muncul dalam PDF) */
         #printInfo { display: none; font-size: 0.75rem; color: #555; margin-bottom: 10px; text-align: right; }
 
-        .table { width: 100%; border-collapse: collapse; }
-.col-tarikh { width: 10%; }
-.col-nama { width: 22%; }
-.col-kelas { width: 10%; }
-.col-sebab { width: 25%; }
-.col-pelapor { width: 23%; } /* Kolum baru */
-.col-tindakan { width: 10%; }
-
-@media print {
-    /* Lebar kolum dalam PDF A4 (Tanpa kolum Tindakan) */
-    .col-tarikh { width: 12%; }
-    .col-nama { width: 25%; }
-    .col-kelas { width: 13%; }
-    .col-sebab { width: 25%; }
-    .col-pelapor { width: 25%; }
-}
+        /* PENGATURAN KOLUM SKRIN */
+        .table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+        .col-tarikh { width: 100px; }
+        .col-nama { width: 200px; }
+        .col-kelas { width: 80px; }
+        .col-sebab { width: auto; }
+        .col-pelapor { width: 180px; }
+        .col-tindakan { width: 90px; }
 
         .table thead { background-color: var(--dark-red); color: white; }
-        .table th { font-size: 0.85rem; text-transform: uppercase; padding: 15px 10px !important; border: none; text-align: center; }
-        .table td { font-size: 0.9rem; vertical-align: middle; padding: 12px 10px !important; word-wrap: break-word; }
+        .table th { font-size: 0.75rem; text-transform: uppercase; padding: 12px 8px !important; text-align: center; border: none; }
+        .table td { font-size: 0.85rem; vertical-align: middle; padding: 10px 8px !important; word-wrap: break-word; }
         
-        .text-nama { font-weight: 700; color: #333; text-transform: uppercase; line-height: 1.2; }
+        .text-nama { font-weight: 700; color: #333; text-transform: uppercase; font-size: 0.8rem; }
         .text-kelas { color: var(--dark-red); font-weight: bold; text-align: center; }
-        .btn-padam { font-size: 0.7rem; padding: 4px 10px; border-radius: 6px; border: 1px solid #ddd; }
+        .text-pelapor { font-weight: 600; color: #555; text-transform: uppercase; font-size: 0.75rem; }
+        .btn-padam { font-size: 0.7rem; padding: 4px 8px; border-radius: 6px; }
 
+        /* OPTIMASI CETAKAN A4 */
         @media print {
             @page { size: A4 portrait; margin: 1cm; }
             body { background: white !important; padding: 0; }
             .btn, .btn-padam, .col-tindakan, .action-bar { display: none !important; }
-            #printInfo { display: block !important; } /* Tunjukkan tarikh cetakan dalam PDF */
-            .header-section { background: none !important; color: black !important; border-bottom: 2px solid #000; border-radius: 0; padding: 10px 0; margin-bottom: 10px; }
+            #printInfo { display: block !important; }
+            .header-section { background: none !important; color: black !important; border-bottom: 2px solid #000; border-radius: 0; padding: 10px 0; }
             .header-logo { width: 60px !important; filter: grayscale(1); }
-            .table { border: 1px solid #000 !important; table-layout: fixed !important; }
+            .table { border: 1px solid #000 !important; table-layout: fixed !important; width: 100% !important; }
             .table th, .table td { border: 1px solid #000 !important; color: black !important; padding: 8px !important; }
-            .text-nama, .text-kelas { color: black !important; }
+            
+            /* Laraskan lebar kolum PDF (Jumlah 100%) */
+            .col-tarikh { width: 12%; }
+            .col-nama { width: 23%; }
+            .col-kelas { width: 10%; }
+            .col-sebab { width: 30%; }
+            .col-pelapor { width: 25%; }
         }
     </style>
 </head>
@@ -63,7 +63,7 @@
     <div class="header-section text-center">
         <div class="container">
             <img src="https://imgur.com/DLy3jZn.png" alt="Logo" style="width:70px;" class="mb-2 header-logo">
-            <h1 style="font-weight:800; font-size:1.3rem;">SK BANDAR TUN HUSSEIN ONN 2</h1>
+            <h1 style="font-weight:800; font-size:1.2rem;">SK BANDAR TUN HUSSEIN ONN 2</h1>
             <p class="mb-0 small opacity-75">Laporan Ketidakhadiran Aktiviti Kokurikulum</p>
         </div>
     </div>
@@ -79,18 +79,19 @@
         <div class="card card-table overflow-hidden">
             <div class="table-responsive">
                 <table class="table table-hover mb-0">
-                   <thead>
-    <tr>
-        <th class="col-tarikh">Tarikh</th>
-        <th class="col-nama">Nama Murid</th>
-        <th class="col-kelas">Kelas</th>
-        <th class="col-sebab">Sebab</th>
-        <th class="col-pelapor">Pelapor</th> <th class="col-tindakan">Tindakan</th>
-    </tr>
-</thead>
+                    <thead>
+                        <tr>
+                            <th class="col-tarikh">Tarikh</th>
+                            <th class="col-nama">Nama Murid</th>
+                            <th class="col-kelas">Kelas</th>
+                            <th class="col-sebab">Sebab</th>
+                            <th class="col-pelapor">Pelapor (Guru)</th>
+                            <th class="col-tindakan">Tindakan</th>
+                        </tr>
+                    </thead>
                     <tbody id="tableBody">
                         <tr>
-                            <td colspan="5" class="text-center py-5">Memuatkan data...</td>
+                            <td colspan="6" class="text-center py-5 text-muted">Memuatkan data laporan...</td>
                         </tr>
                     </tbody>
                 </table>
@@ -99,50 +100,49 @@
     </div>
 
     <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzgqeo-b7TpsEZXjitYgqBJmIIsszXPD_Utr_6iWy8lytpeY_crGWJHdW6UuisEzUms/exec";
+        // Guna SCRIPT_URL terbaru anda
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwF1cSpla8q0MUV8ZieZwdX26hCbAs99GCt3V65FZB1lOYWEgyUt0uUzRdVd-JnX5RI/exec";
 
         async function muatData() {
+            const tableBody = document.getElementById('tableBody');
             try {
                 const response = await fetch(`${SCRIPT_URL}?t=${new Date().getTime()}`);
                 const data = await response.json();
-                let html = "";
                 
                 if (!data || data.length <= 1) {
-                    html = "<tr><td colspan='5' class='text-center py-5'>Tiada rekod.</td></tr>";
-                } else {
-for (let i = data.length - 1; i >= 1; i--) {
-    const row = data[i];
-    
-    // row[0] = Tarikh
-    // row[1] = Nama Murid
-    // row[2] = Kelas
-    // row[3] = Sebab
-    // row[4] = Pelapor (Kolum E)
-
-    html += `<tr>
-        <td class="text-center small">${row[0]}</td>
-        <td class="text-nama small">${row[1]}</td>
-        <td class="text-kelas text-center small">${row[2]}</td>
-        <td class="small text-muted">${row[3]}</td>
-        <td class="small fw-bold text-uppercase">${row[4] || '-'}</td> <td class="text-center col-tindakan">
-            <button onclick="padamRekod(${i})" class="btn btn-light btn-padam text-danger">Padam</button>
-        </td>
-    </tr>`;
-}
-                    }
+                    tableBody.innerHTML = "<tr><td colspan='6' class='text-center py-5'>Tiada rekod ditemui.</td></tr>";
+                    return;
                 }
-                document.getElementById('tableBody').innerHTML = html;
-            } catch (e) {
-                document.getElementById('tableBody').innerHTML = "<tr><td colspan='5' class='text-center'>Gagal memuatkan data.</td></tr>";
+
+                let html = "";
+                // Loop dari data terbaru (paling bawah di Sheet)
+                for (let i = data.length - 1; i >= 1; i--) {
+                    const row = data[i];
+                    
+                    // Format Tarikh
+                    let tarikhAsal = row[0] ? row[0].toString() : "";
+                    let tarikhSahaja = tarikhAsal.split(' ')[0].split('T')[0]; 
+
+                    html += `<tr>
+                        <td class="text-center small">${tarikhSahaja}</td>
+                        <td class="text-nama">${row[1] || '-'}</td>
+                        <td class="text-kelas">${row[2] || '-'}</td>
+                        <td class="small text-muted">${row[3] || '-'}</td>
+                        <td class="text-pelapor">${row[4] || '-'}</td> <td class="text-center col-tindakan">
+                            <button onclick="padamRekod(${i})" class="btn btn-light btn-padam text-danger border">Padam</button>
+                        </td>
+                    </tr>`;
+                }
+                tableBody.innerHTML = html;
+            } catch (error) {
+                tableBody.innerHTML = "<tr><td colspan='6' class='text-center py-5 text-danger'>Ralat sambungan. Sila muat semula halaman.</td></tr>";
             }
         }
 
         function cetakLaporan() {
-            // Jana masa cetakan 24 jam
             const sekarang = new Date();
             const tarikh = sekarang.toLocaleDateString('ms-MY');
-            const masa = sekarang.toLocaleTimeString('ms-MY', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
-            
+            const masa = sekarang.toLocaleTimeString('ms-MY', { hour12: false });
             document.getElementById('printInfo').innerText = `Dicetak pada: ${tarikh} | Masa: ${masa}`;
             window.print();
         }
@@ -154,10 +154,13 @@ for (let i = data.length - 1; i >= 1; i--) {
                     try {
                         const res = await fetch(`${SCRIPT_URL}?del=${index}`);
                         const txt = await res.text();
-                        if (txt.includes("Deleted")) { alert("Berjaya!"); muatData(); }
-                    } catch (e) { alert("Ralat."); }
+                        if (txt.includes("Deleted")) { 
+                            alert("Berjaya dipadam!"); 
+                            muatData(); 
+                        }
+                    } catch (e) { alert("Ralat semasa memadam."); }
                 }
-            } else if (pw !== null) { alert("Salah!"); }
+            } else if (pw !== null) { alert("Kata laluan salah!"); }
         }
 
         muatData();
