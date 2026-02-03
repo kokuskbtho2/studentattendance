@@ -37,7 +37,7 @@
         .flying-block:nth-child(4) { width: 60px; height: 60px; left: 70%; animation-duration: 15s; }
         .flying-block:nth-child(5) { width: 90px; height: 90px; left: 85%; animation-duration: 22s; }
 
-        /* --- ANIMASI LOGO --- */
+        /* --- LOGO & TITLE --- */
         .logo-container { position: relative; display: inline-block; margin-bottom: 15px; }
         .header-logo { width: 100px; height: auto; position: relative; z-index: 2; filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.5)); }
         .pulse-ring {
@@ -53,6 +53,24 @@
         .school-title { font-weight: 800; color: white; text-shadow: 2px 2px 8px rgba(0,0,0,0.6); font-size: 1.3rem; }
         .card { border: none; border-radius: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.4); background: rgba(255, 255, 255, 0.95); }
         .card-header { background-color: var(--dark-red) !important; color: white; border-radius: 25px 25px 0 0 !important; font-weight: bold; }
+        
+        /* --- PENYELARASAN FONT (SAIZ SAMA) --- */
+        .form-label {
+            font-size: 0.9rem !important; /* Saiz arahan di atas kotak */
+            letter-spacing: 0.5px;
+        }
+
+        .form-control, .form-select {
+            font-size: 0.9rem !important; /* Saiz teks/arahan di dalam kotak */
+            border-radius: 10px;
+        }
+
+        /* Penyelarasan placeholder untuk browser berbeza */
+        .form-control::placeholder {
+            font-size: 0.9rem !important;
+            opacity: 0.7;
+        }
+
         .btn-red { background: linear-gradient(to right, #ff0000, #b30000); color: white; border: none; font-weight: bold; padding: 12px; transition: 0.3s; }
         .btn-red:active { transform: scale(0.95); }
     </style>
@@ -79,18 +97,18 @@
             <div class="card-body p-4">
                 <form id="kokoForm">
                     <div class="mb-3">
-                        <label class="form-label small fw-bold text-dark">TARIKH</label>
+                        <label class="form-label fw-bold text-dark">TARIKH</label>
                         <input type="date" id="tarikh" class="form-control form-control-lg" required>
                     </div>
                     
                     <div class="mb-3">
-                        <label class="form-label small fw-bold text-dark">NAMA MURID</label>
+                        <label class="form-label fw-bold text-dark">NAMA MURID</label>
                         <input type="text" id="nama" class="form-control form-control-lg text-uppercase" placeholder="NAMA PENUH MURID" required>
                     </div>
 
                     <div class="row">
                         <div class="col-6 mb-3">
-                            <label class="form-label small fw-bold text-dark">TAHUN</label>
+                            <label class="form-label fw-bold text-dark">TAHUN</label>
                             <select id="tahun" class="form-select form-select-lg" required onchange="kemaskiniKelas()">
                                 <option value="">Pilih</option>
                                 <option value="4">4</option>
@@ -99,7 +117,7 @@
                             </select>
                         </div>
                         <div class="col-6 mb-3">
-                            <label class="form-label small fw-bold text-dark">KELAS</label>
+                            <label class="form-label fw-bold text-dark">KELAS</label>
                             <select id="kelas" class="form-select form-select-lg" required disabled>
                                 <option value="">Pilih Kelas</option>
                             </select>
@@ -107,14 +125,14 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label small fw-bold text-dark">SEBAB KETIDAKHADIRAN</label>
-                        <textarea id="sebab" class="form-control form-control-lg" rows="2" placeholder="Sila nyatakan alasan" required></textarea>
+                        <label class="form-label fw-bold text-dark">SEBAB KETIDAKHADIRAN</label>
+                        <textarea id="sebab" class="form-control form-control-lg" rows="2" placeholder="SILA NYATAKAN ALASAN" required></textarea>
                     </div>
 
                     <div class="mb-4">
-                        <label class="form-label small fw-bold text-dark">NAMA GURU (PELAPOR)</label>
+                        <label class="form-label fw-bold text-dark">NAMA GURU (PELAPOR)</label>
                         <select id="pelapor" class="form-select form-select-lg" required>
-                            <option value="">Pilih Nama Guru</option>
+                            <option value="">PILIH NAMA GURU</option>
                             <option value="ABDUL KAHAR BIN AWANG SEMAN">ABDUL KAHAR BIN AWANG SEMAN</option>
                             <option value="AINA ATHIRAH BINTI AHMAD SENARI">AINA ATHIRAH BINTI AHMAD SENARI</option>
                             <option value="AMINUDDIN BIN ISMAIL">AMINUDDIN BIN ISMAIL</option>
@@ -136,7 +154,6 @@
                             <option value="HARISAH BINTI AWANG">HARISAH BINTI AWANG</option>
                             <option value="HARIZ IRFAN BIN HUSSIN PAKRI">HARIZ IRFAN BIN HUSSIN PAKRI</option>
                             <option value="HASMAWATI BINTI OTHMAN">HASMAWATI BINTI OTHMAN</option>
-                            <option value="HAFIZI BIN OMAR">HAFIZI BIN OMAR</option>
                             <option value="HAZRAH BINTI MOHAMAD">HAZRAH BINTI MOHAMAD</option>
                             <option value="IRDINA AFIQAH BINTI ISMAIL">IRDINA AFIQAH BINTI ISMAIL</option>
                             <option value="IRMA AZNITA BINTI KAMBALI">IRMA AZNITA BINTI KAMBALI</option>
@@ -233,7 +250,6 @@
             btn.disabled = true;
             btn.innerText = "MENGHANTAR...";
 
-            // AMBIL SEMUA 5 DATA DI SINI
             const formData = {
                 tarikh: document.getElementById('tarikh').value,
                 nama: document.getElementById('nama').value,
