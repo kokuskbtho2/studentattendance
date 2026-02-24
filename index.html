@@ -214,7 +214,7 @@
     </div>
 
     <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw0kW31mYmkRpTaH6UmypE9pCUSjg7gugv0QU1699TMuVdo1O_qTE9Rpba95vK2oHv4/exec";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw8YeiqjUSA7kRnTlT9UrH800rVf71K5NW5CYyvCwLD10SDxOIoV8whjIq5_os_F0qi/exec";
         
         const senaraiKelasAsas = ["JASMINE", "HIBISCUS", "SUNFLOWER", "LAVENDER", "TULIP", "DAISY", "SAKURA", "ROSE", "ORCHID"];
 
@@ -250,13 +250,16 @@
             btn.disabled = true;
             btn.innerText = "MENGHANTAR...";
 
-            const formData = {
-                tarikh: document.getElementById('tarikh').value,
-                nama: document.getElementById('nama').value,
-                kelas: document.getElementById('kelas').value,
-                sebab: document.getElementById('sebab').value,
-                pelapor: document.getElementById('pelapor').value
-            };
+// Gantikan bahagian ambil data dalam index.html
+const tarikhInput = document.getElementById('tarikh').value; // Contoh: "2026-02-11"
+
+const formData = {
+    tarikh: tarikhInput, // Kita hantar string "2026-02-11" terus
+    nama: document.getElementById('nama').value,
+    kelas: document.getElementById('kelas').value,
+    sebab: document.getElementById('sebab').value,
+    pelapor: document.getElementById('pelapor').value
+};
 
             fetch(SCRIPT_URL, {
                 method: 'POST',
