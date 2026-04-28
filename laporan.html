@@ -117,22 +117,26 @@
                 let html = "";
                 // Loop dari data terbaru (paling bawah di Sheet)
                 for (let i = data.length - 1; i >= 1; i--) {
-                    const row = data[i];
-                    
-                    // Format Tarikh
-                    let tarikhAsal = row[0] ? row[0].toString() : "";
-                    let tarikhSahaja = tarikhAsal.split(' ')[0].split('T')[0]; 
+    const row = data[i];
+    
+    // Ambil tarikh terus daripada Google Sheets
+    let tarikhAsal = row[0] ? row[0].toString() : "";
+    
+    // Kita hanya ambil bahagian depan (YYYY-MM-DD) sahaja
+    // supaya tidak muncul waktu 00:00:00 atau tarikh pelik
+    let tarikhPaparan = tarikhAsal.split('T')[0].split(' ')[0];
 
-                    html += `<tr>
-                        <td class="text-center small">${tarikhSahaja}</td>
-                        <td class="text-nama">${row[1] || '-'}</td>
-                        <td class="text-kelas">${row[2] || '-'}</td>
-                        <td class="small text-muted">${row[3] || '-'}</td>
-                        <td class="text-pelapor">${row[4] || '-'}</td> <td class="text-center col-tindakan">
-                            <button onclick="padamRekod(${i})" class="btn btn-light btn-padam text-danger border">Padam</button>
-                        </td>
-                    </tr>`;
-                }
+    html += `<tr>
+        <td class="text-center" style="font-size: 0.65rem;">${tarikhPaparan}</td>
+        <td class="text-nama">${row[1] || '-'}</td>
+        <td class="text-kelas">${row[2] || '-'}</td>
+        <td>${row[3] || '-'}</td>
+        <td class="text-pelapor">${row[4] || '-'}</td>
+        <td class="text-center col-tindakan">
+            <button onclick="padamRekod(${i})" class="btn btn-light btn-padam text-danger border">Padam</button>
+        </td>
+    </tr>`;
+}
                 tableBody.innerHTML = html;
             } catch (error) {
                 tableBody.innerHTML = "<tr><td colspan='6' class='text-center py-5 text-danger'>Ralat sambungan. Sila muat semula halaman.</td></tr>";
