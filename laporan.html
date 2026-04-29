@@ -120,32 +120,23 @@
 for (let i = data.length - 1; i >= 1; i--) {
     const row = data[i];
     
-    // 1. Ambil data tarikh dari kolum pertama
-    let tarikhDariSheet = row[0] ? row[0].toString() : "";
+    // Ambil data mentah dari Sheet
+    let rawDate = row[0] ? row[0].toString() : "";
     let tarikhPaparan = "";
 
-    if (tarikhDariSheet !== "") {
-        // KUNCI PENYELESAIAN: 
-        // Jika data dari sheet mengandungi waktu (ISO String), kita potong ambil 10 huruf pertama sahaja (YYYY-MM-DD)
-        // Kita tidak akan guna "new Date()" kerana itu yang menyebabkan tarikh lari.
-        
-        if (tarikhDariSheet.includes("T")) {
-            // Contoh: "2026-04-29T16:00:00.000Z" -> ambil "2026-04-29"
-            tarikhPaparan = tarikhDariSheet.split("T")[0];
-        } else if (tarikhDariSheet.includes(" ")) {
-            // Contoh: "Wed Apr 29 2026 00:00:00..." -> ambil tarikh sahaja
-            tarikhPaparan = tarikhDariSheet.split(" 00:00:00")[0];
-        } else {
-            // Jika sudah sedia dalam format teks (Plain Text)
-            tarikhPaparan = tarikhDariSheet;
-        }
+    if (rawDate !== "") {
+        // Jika data mengandungi "T" (Contoh: 2026-04-29T16:00:00Z)
+        // Kita hiris hanya 10 huruf pertama sahaja: "2026-04-29"
+        // Ini akan mematikan fungsi zon masa secara total.
+        let tarikhBersih = rawDate.split("T")[0]; 
 
-        // Opsional: Tukar format YYYY-MM-DD kepada DD/MM/YYYY untuk paparan lebih cantik
-        if (tarikhPaparan.includes("-")) {
-            let p = tarikhPaparan.split("-");
-            if (p.length === 3) {
-                tarikhPaparan = p[2] + "/" + p[1] + "/" + p[0];
-            }
+        // Jika tarikh masih dalam format YYYY-MM-DD, kita cantikkan ke DD/MM/YYYY
+        let p = tarikhBersih.split("-");
+        if (p.length === 3) {
+            // Pastikan kita ambil tahun yang betul-betul tertulis, bukan hasil convert
+            tarikhPaparan = p[2] + "/" + p[1] + "/" + p[0];
+        } else {
+            tarikhPaparan = tarikhBersih;
         }
     }
 
