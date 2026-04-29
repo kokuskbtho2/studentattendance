@@ -116,24 +116,40 @@
 
                 let html = "";
                 // Loop dari data terbaru (paling bawah di Sheet)
-                for (let i = data.length - 1; i >= 1; i--) {
+                // Di dalam fungsi yang memaparkan data (doGet)
+for (let i = data.length - 1; i >= 1; i--) {
     const row = data[i];
     
-    // Ambil tarikh terus daripada Google Sheets
-    let tarikhAsal = row[0] ? row[0].toString() : "";
-    
-    // Kita hanya ambil bahagian depan (YYYY-MM-DD) sahaja
-    // supaya tidak muncul waktu 00:00:00 atau tarikh pelik
-    let tarikhPaparan = tarikhAsal.split('T')[0].split(' ')[0];
+    // 1. AMBIL TARIKH DARI SHEET
+    let tarikhMentah = row[0]; 
+    let tarikhPaparan = "";
+
+    if (tarikhMentah) {
+        // Jika Google hantar sebagai objek Date, kita tukar jadi string
+        let d = new Date(tarikhMentah);
+        
+        // KUNCI: Kita ambil Tahun, Bulan, Tarikh secara manual 
+        // supaya dia tak lari zon masa lagi
+        let yyyy = d.getFullYear();
+        let mm = String(d.getMonth() + 1).padStart(2, '0');
+        let dd = String(d.getDate()).padStart(2, '0');
+        
+        // Jika tarikh yang keluar masih semalam, kita paksa ia ikut format teks
+        if (tarikhMentah.toString().includes("-")) {
+             tarikhPaparan = tarikhMentah.toString().split('T')[0];
+        } else {
+             tarikhPaparan = `${dd}/${mm}/${yyyy}`;
+        }
+    }
 
     html += `<tr>
-        <td class="text-center" style="font-size: 0.65rem;">${tarikhPaparan}</td>
+        <td class="text-center" style="font-size: 0.85rem;">${tarikhPaparan}</td>
         <td class="text-nama">${row[1] || '-'}</td>
         <td class="text-kelas">${row[2] || '-'}</td>
         <td>${row[3] || '-'}</td>
         <td class="text-pelapor">${row[4] || '-'}</td>
-        <td class="text-center col-tindakan">
-            <button onclick="padamRekod(${i})" class="btn btn-light btn-padam text-danger border">Padam</button>
+        <td class="text-center">
+            <button onclick="padamRekod(${i})" class="btn btn-sm btn-outline-danger">Padam</button>
         </td>
     </tr>`;
 }
