@@ -87,67 +87,40 @@
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzHPkxjdWTkSk53Oy4sPNgMsfE1Ww4C9cAaEST31M3GLJOq3GDTUqQ9sTYyTty5aFxc/exec";
 
     async function muatData() {
-        const tableBody = document.getElementById('tableBody');
-        try {
-            const response = await fetch(`${SCRIPT_URL}?t=${new Date().getTime()}`);
-            const data = await response.json();
-            
-            if (!data || data.length <= 1) {
-                tableBody.innerHTML = "<tr><td colspan='6' class='text-center py-5'>Tiada rekod ditemui.</td></tr>";
-                return;
-            }
-
-            let html = "";
-            for (let i = data.length - 1; i >= 1; i--) {
-                const row = data[i];
-                
-                // --- LOGIK ANTI-ZON MASA (PENTING) ---
-                let raw = row[0] ? String(row[0]) : "";
-                let finalDate = "";
-
-                if (raw.length > 10) {
-                    // Jika hantar format "Wed Apr 29 2026..."
-                    // Pecahkan string kepada array
-                    const parts = raw.split(" ");
-                    if (parts.length >= 4) {
-                        const day = parts[2];
-                        const monthName = parts[1];
-                        const year = parts[3];
-
-                        const months = {
-                            'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04', 'May': '05', 'Jun': '06',
-                            'Jul': '07', 'Aug': '08', 'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12'
-                        };
-                        finalDate = `${day}/${months[monthName] || '01'}/${year}`;
-                    } else if (raw.includes("T")) {
-                        // Jika format ISO "2026-04-29T..."
-                        let d = raw.split("T")[0].split("-");
-                        finalDate = `${d[2]}/${d[1]}/${d[0]}`;
-                    }
-                } else if (raw.includes("-")) {
-                    // Jika format "2026-04-29"
-                    let d = raw.split("-");
-                    finalDate = `${d[2]}/${d[1]}/${d[0]}`;
-                } else {
-                    finalDate = raw;
-                }
-
-                html += `<tr>
-                    <td class="text-center"><b>${finalDate}</b></td>
-                    <td class="text-nama">${row[1] || '-'}</td>
-                    <td class="text-center text-kelas" style="font-size: 0.75rem;">${row[2] || '-'}</td>
-                    <td>${row[3] || '-'}</td>
-                    <td class="text-pelapor">${row[4] || '-'}</td>
-                    <td class="text-center">
-                        <button onclick="padamRekod(${i})" class="btn btn-sm btn-outline-danger btn-padam">Padam</button>
-                    </td>
-                </tr>`;
-            }
-            tableBody.innerHTML = html;
-        } catch (error) {
-            tableBody.innerHTML = "<tr><td colspan='6' class='text-center py-5 text-danger'>Ralat memuatkan data.</td></tr>";
+    const tableBody = document.getElementById('tableBody');
+    try {
+        const response = await fetch(`${SCRIPT_URL}?t=${new Date().getTime()}`);
+        const data = await response.json();
+        
+        if (!data || data.length <= 1) {
+            tableBody.innerHTML = "<tr><td colspan='6' class='text-center py-5'>Tiada rekod.</td></tr>";
+            return;
         }
+
+        let html = "";
+        // Kita mula dari i = 1 sebab i = 0 adalah header (Tarikh, Nama, dll)
+        for (let i = data.length - 1; i >= 1; i--) {
+            const row = data[i];
+            
+            // Sekarang row[0] adalah TEKS TULEN dari Sheets (e.g. "29/04/2026")
+            let tarikhPaparan = row[0]; 
+
+            html += `<tr>
+                <td class="text-center"><b>${tarikhPaparan}</b></td>
+                <td class="text-nama">${row[1] || '-'}</td>
+                <td class="text-kelas">${row[2] || '-'}</td>
+                <td>${row[3] || '-'}</td>
+                <td class="text-pelapor">${row[4] || '-'}</td>
+                <td class="text-center">
+                    <button onclick="padamRekod(${i})" class="btn btn-sm btn-danger">Padam</button>
+                </td>
+            </tr>`;
+        }
+        tableBody.innerHTML = html;
+    } catch (error) {
+        tableBody.innerHTML = "<tr><td colspan='6' class='text-center py-5 text-danger'>Ralat.</td></tr>";
     }
+}
 
     function cetakLaporan() {
         const sekarang = new Date();
