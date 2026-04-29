@@ -104,59 +104,74 @@
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzHPkxjdWTkSk53Oy4sPNgMsfE1Ww4C9cAaEST31M3GLJOq3GDTUqQ9sTYyTty5aFxc/exec";
 
         async function muatData() {
-            const tableBody = document.getElementById('tableBody');
-            try {
-                const response = await fetch(`${SCRIPT_URL}?t=${new Date().getTime()}`);
-                const data = await response.json();
+    const tableBody = document.getElementById('tableBody');
+    try {
+        // Tambah timestamp supaya data sentiasa yang terbaru (tiada cache)
+        const response = await fetch(`${SCRIPT_URL}?t=${new Date().getTime()}`);
+        const data = await response.json();
+        
+        if (!data || data.length <= 1) {
+            tableBody.innerHTML = "<tr><td colspan='6' class='text-center py-5'>Tiada rekod ditemui.</td></tr>";
+            return;
+        }
+
+        let html = "";
+        for (let i = data.length - 1; i >= 1; i--) {
+            const row = data[i];
+            
+            // 1. Ambil data mentah
+            let rawDate = row[0] ? row[0].toString() : "";
+            let tarikhPaparan = "";
+
+            if (rawDate !== "") {
+                /* KUNCI PENYELESAIAN: 
+                   Kita 'hiris' (slice) teks tarikh ini secara paksa. 
+                   Kalau dia hantar "Wed Apr 29..." atau "2026-04-29T...", 
+                   kod di bawah akan paksa ambil karakter yang mewakili tarikh sahaja.
+                */
                 
-                if (!data || data.length <= 1) {
-                    tableBody.innerHTML = "<tr><td colspan='6' class='text-center py-5'>Tiada rekod ditemui.</td></tr>";
-                    return;
+                // Jika format ISO (ada huruf T), ambil 10 huruf depan: 2026-04-29
+                if (rawDate.includes("T")) {
+                    tarikhPaparan = rawDate.split("T")[0];
+                } 
+                // Jika format teks panjang (Wed Apr 29...), kita cari tahun dan potong
+                else if (rawDate.includes("202")) { 
+                    // Kita cari di mana "202" (untuk tahun 202x) bermula dan ambil 10 huruf
+                    let indexTahun = rawDate.indexOf("202");
+                    // Kadang format hantar YYYY-MM-DD di tengah, kita bersihkan
+                    tarikhPaparan = rawDate.substring(indexTahun - 6, indexTahun + 4).trim();
+                    // Jika masih gagal, kita guna regex untuk cari pattern YYYY-MM-DD
+                    let match = rawDate.match(/\d{4}-\d{2}-\d{2}/);
+                    if (match) tarikhPaparan = match[0];
+                } else {
+                    tarikhPaparan = rawDate;
                 }
 
-                let html = "";
-                // Loop dari data terbaru (paling bawah di Sheet)
-               // Di dalam laporan.html, cari bahagian yang membina jadual (html += ...)
-for (let i = data.length - 1; i >= 1; i--) {
-    const row = data[i];
-    
-    // Ambil data mentah dari Sheet
-    let rawDate = row[0] ? row[0].toString() : "";
-    let tarikhPaparan = "";
-
-    if (rawDate !== "") {
-        // Jika data mengandungi "T" (Contoh: 2026-04-29T16:00:00Z)
-        // Kita hiris hanya 10 huruf pertama sahaja: "2026-04-29"
-        // Ini akan mematikan fungsi zon masa secara total.
-        let tarikhBersih = rawDate.split("T")[0]; 
-
-        // Jika tarikh masih dalam format YYYY-MM-DD, kita cantikkan ke DD/MM/YYYY
-        let p = tarikhBersih.split("-");
-        if (p.length === 3) {
-            // Pastikan kita ambil tahun yang betul-betul tertulis, bukan hasil convert
-            tarikhPaparan = p[2] + "/" + p[1] + "/" + p[0];
-        } else {
-            tarikhPaparan = tarikhBersih;
-        }
-    }
-
-    html += `<tr>
-        <td class="text-center" style="font-weight: bold;">${tarikhPaparan}</td>
-        <td>${row[1] || '-'}</td>
-        <td>${row[2] || '-'}</td>
-        <td>${row[3] || '-'}</td>
-        <td>${row[4] || '-'}</td>
-        <td class="text-center">
-            <button onclick="padamRekod(${i})" class="btn btn-sm btn-danger">Padam</button>
-        </td>
-    </tr>`;
-}
-                tableBody.innerHTML = html;
-            } catch (error) {
-                tableBody.innerHTML = "<tr><td colspan='6' class='text-center py-5 text-danger'>Ralat sambungan. Sila muat semula halaman.</td></tr>";
+                // Cantikkan paparan ke DD/MM/YYYY
+                if (tarikhPaparan.includes("-")) {
+                    let p = tarikhPaparan.split("-");
+                    if (p.length === 3) {
+                        tarikhPaparan = p[2] + "/" + p[1] + "/" + p[0];
+                    }
+                }
             }
-        }
 
+            html += `<tr>
+                <td class="text-center" style="font-weight: bold;">${tarikhPaparan}</td>
+                <td class="text-nama">${row[1] || '-'}</td>
+                <td class="text-kelas">${row[2] || '-'}</td>
+                <td>${row[3] || '-'}</td>
+                <td class="text-pelapor">${row[4] || '-'}</td>
+                <td class="text-center">
+                    <button onclick="padamRekod(${i})" class="btn btn-sm btn-danger">Padam</button>
+                </td>
+            </tr>`;
+        }
+        tableBody.innerHTML = html;
+    } catch (error) {
+        tableBody.innerHTML = "<tr><td colspan='6' class='text-center py-5 text-danger'>Ralat sambungan. Sila muat semula.</td></tr>";
+    }
+}
         function cetakLaporan() {
             const sekarang = new Date();
             const tarikh = sekarang.toLocaleDateString('ms-MY');
