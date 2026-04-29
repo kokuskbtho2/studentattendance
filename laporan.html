@@ -99,81 +99,102 @@
         </div>
     </div>
 
-    <script>
-        // Guna SCRIPT_URL terbaru anda
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzHPkxjdWTkSk53Oy4sPNgMsfE1Ww4C9cAaEST31M3GLJOq3GDTUqQ9sTYyTty5aFxc/exec";
+<script>
+    // Guna SCRIPT_URL terbaru anda
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzHPkxjdWTkSk53Oy4sPNgMsfE1Ww4C9cAaEST31M3GLJOq3GDTUqQ9sTYyTty5aFxc/exec";
 
-        async function muatData() {
-    const tableBody = document.getElementById('tableBody');
-    try {
-        const response = await fetch(`${SCRIPT_URL}?t=${new Date().getTime()}`);
-        const data = await response.json();
-        
-        if (!data || data.length <= 1) {
-            tableBody.innerHTML = "<tr><td colspan='6' class='text-center py-5'>Tiada rekod.</td></tr>";
-            return;
-        }
-
-        let html = "";
-        for (let i = data.length - 1; i >= 1; i--) {
-            const row = data[i];
+    async function muatData() {
+        const tableBody = document.getElementById('tableBody');
+        try {
+            // Gunakan t= timestamp untuk elakkan cache browser
+            const response = await fetch(`${SCRIPT_URL}?t=${new Date().getTime()}`);
+            const data = await response.json();
             
-            // LANGKAH 'PLAIN TEXT' TOTAL:
-            // Kita ambil apa sahaja yang ada di sel pertama dan tukar jadi String.
-            let teksTarikh = row[0] ? String(row[0]) : "";
-            
-            // Kita 'cuci' teks ini. Jika Google hantar format panjang (ISO), 
-            // kita cuma ambil 10 huruf pertama (Contoh: 2026-04-29).
-            let tarikhPaparan = teksTarikh.split("T")[0];
-
-            // Jika anda mahu tukar format dari 2026-04-29 ke 29/04/2026:
-            if (tarikhPaparan.includes("-")) {
-                let p = tarikhPaparan.split("-");
-                if(p.length === 3) {
-                    tarikhPaparan = `${p[2]}/${p[1]}/${p[0]}`;
-                }
+            if (!data || data.length <= 1) {
+                tableBody.innerHTML = "<tr><td colspan='6' class='text-center py-5'>Tiada rekod ditemui.</td></tr>";
+                return;
             }
 
-            html += `<tr>
-                <td class="text-center"><b>${tarikhPaparan}</b></td>
-                <td class="text-nama">${row[1] || '-'}</td>
-                <td class="text-kelas">${row[2] || '-'}</td>
-                <td>${row[3] || '-'}</td>
-                <td class="text-pelapor">${row[4] || '-'}</td>
-                <td class="text-center">
-                    <button onclick="padamRekod(${i})" class="btn btn-sm btn-danger">Padam</button>
-                </td>
-            </tr>`;
-        }
-        tableBody.innerHTML = html;
-    } catch (error) {
-        tableBody.innerHTML = "<tr><td colspan='6' class='text-center py-5 text-danger'>Ralat.</td></tr>";
-    }
-        function cetakLaporan() {
-            const sekarang = new Date();
-            const tarikh = sekarang.toLocaleDateString('ms-MY');
-            const masa = sekarang.toLocaleTimeString('ms-MY', { hour12: false });
-            document.getElementById('printInfo').innerText = `Dicetak pada: ${tarikh} | Masa: ${masa}`;
-            window.print();
-        }
+            let html = "";
+            // Loop dari data terbaru
+            for (let i = data.length - 1; i >= 1; i--) {
+                const row = data[i];
+                
+                // --- PROSES TARIKH (ANTI-ZON MASA) ---
+                let teksTarikh = row[0] ? String(row[0]) : "";
+                let tarikhPaparan = teksTarikh;
 
-        async function padamRekod(index) {
-            const pw = prompt("Masukkan Kata Laluan Padam:");
-            if (pw === "4055") {
-                if (confirm("Padam rekod ini secara kekal?")) {
-                    try {
-                        const res = await fetch(`${SCRIPT_URL}?del=${index}`);
-                        const txt = await res.text();
-                        if (txt.includes("Deleted")) { 
-                            alert("Berjaya dipadam!"); 
-                            muatData(); 
-                        }
-                    } catch (e) { alert("Ralat semasa memadam."); }
+                // Jika Google hantar format Wed Apr 29 2026...
+                if (teksTarikh.includes("202")) {
+                    // Cari pattern YYYY-MM-DD menggunakan Regex
+                    let match = teksTarikh.match(/\d{4}-\d{2}-\d{2}/);
+                    if (match) {
+                        tarikhPaparan = match[0];
+                    } else if (teksTarikh.includes("T")) {
+                        tarikhPaparan = teksTarikh.split("T")[0];
+                    }
                 }
-            } else if (pw !== null) { alert("Kata laluan salah!"); }
-        }
 
-        muatData();
-    </script>
+                // Tukar YYYY-MM-DD kepada DD/MM/YYYY
+                if (tarikhPaparan.includes("-")) {
+                    let p = tarikhPaparan.split("-");
+                    if(p.length === 3) {
+                        tarikhPaparan = `${p[2]}/${p[1]}/${p[0]}`;
+                    }
+                }
+                // -------------------------------------
+
+                html += `<tr>
+                    <td class="text-center"><b>${tarikhPaparan}</b></td>
+                    <td class="text-nama">${row[1] || '-'}</td>
+                    <td class="text-kelas">${row[2] || '-'}</td>
+                    <td>${row[3] || '-'}</td>
+                    <td class="text-pelapor">${row[4] || '-'}</td>
+                    <td class="text-center">
+                        <button onclick="padamRekod(${i})" class="btn btn-sm btn-danger">Padam</button>
+                    </td>
+                </tr>`;
+            }
+            tableBody.innerHTML = html;
+        } catch (error) {
+            console.error(error);
+            tableBody.innerHTML = "<tr><td colspan='6' class='text-center py-5 text-danger'>Ralat memuatkan data. Sila cuba lagi.</td></tr>";
+        }
+    } // <--- PENUTUP FUNGSI muatData YANG HILANG SEBELUM INI
+
+    function cetakLaporan() {
+        const sekarang = new Date();
+        const tarikh = sekarang.toLocaleDateString('ms-MY');
+        const masa = sekarang.toLocaleTimeString('ms-MY', { hour12: false });
+        const infoDiv = document.getElementById('printInfo');
+        if(infoDiv) {
+            infoDiv.innerText = `Dicetak pada: ${tarikh} | Masa: ${masa}`;
+        }
+        window.print();
+    }
+
+    async function padamRekod(index) {
+        const pw = prompt("Masukkan Kata Laluan Padam:");
+        if (pw === "4055") {
+            if (confirm("Padam rekod ini secara kekal?")) {
+                try {
+                    const res = await fetch(`${SCRIPT_URL}?del=${index}`);
+                    const txt = await res.text();
+                    if (txt.includes("Deleted")) { 
+                        alert("Berjaya dipadam!"); 
+                        muatData(); 
+                    }
+                } catch (e) { 
+                    alert("Ralat semasa memadam."); 
+                }
+            }
+        } else if (pw !== null) { 
+            alert("Kata laluan salah!"); 
+        }
+    }
+
+    // Jalankan fungsi muat data apabila halaman dibuka
+    muatData();
+</script>
 </body>
 </html>
