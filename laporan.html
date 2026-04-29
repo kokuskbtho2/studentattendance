@@ -129,21 +129,28 @@
     }
 
     async function padamRekod(index) {
-        const pw = prompt("Masukkan Kata Laluan Padam:");
-        if (pw === "4055") {
-            if (confirm("Padam rekod ini secara kekal?")) {
-                try {
-                    const res = await fetch(`${SCRIPT_URL}?del=${index}`);
-                    const txt = await res.text();
-                    if (txt.includes("Deleted")) { 
-                        alert("Berjaya dipadam!"); 
-                        muatData(); 
-                    }
-                } catch (e) { alert("Ralat semasa memadam."); }
+    const pw = prompt("Masukkan Kata Laluan Padam:");
+    if (pw === "4055") {
+        if (confirm("Adakah anda pasti mahu memadam rekod ini secara kekal?")) {
+            try {
+                // Kita guna SCRIPT_URL yang sama
+                const response = await fetch(`${SCRIPT_URL}?del=${index}`);
+                const result = await response.text();
+                
+                if (result.includes("Deleted")) {
+                    alert("Rekod berjaya dipadam!");
+                    muatData(); // Refresh jadual secara automatik
+                } else {
+                    alert("Gagal memadam. Respon: " + result);
+                }
+            } catch (e) {
+                alert("Ralat sambungan: " + e.message);
             }
-        } else if (pw !== null) { alert("Kata laluan salah!"); }
+        }
+    } else if (pw !== null) {
+        alert("Kata laluan salah!");
     }
-
+}
     muatData();
 </script>
 </body>
